@@ -11,8 +11,34 @@ import SwiftUI
 struct TotalsView: View {
 
     var body: some View {
+        var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        
+        
         NavigationStack{
-            Text("Hello World")
+            VStack{
+                // Placeholder componente selettore conto
+                
+                HStack{
+                    
+                    DatePicker("", selection: .constant(startDate),
+                               displayedComponents: .date)
+                    .labelsHidden()
+                    
+                    DatePicker("", selection: .constant(Date()),
+                               displayedComponents: .date)
+                    .labelsHidden()
+                    
+                }
+            }
+            
+                .navigationTitle("Totals")
+                
+                .navigationBarTitleDisplayMode(.inline)
+            
+    
+        
+                
+                
         }
 
     }
