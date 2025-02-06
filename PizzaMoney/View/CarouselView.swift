@@ -50,5 +50,5 @@ struct CarouselView: View {
 #Preview {
     @Previewable var banks = ["Contesa San Paolo", "Banca Inulia", "BananaRepublic"]
     @Previewable @State var selected = "Contesa San Paolo"
-    CarouselView(banks: banks, selected: $selected)
+    return CarouselView(banks: banks, selected: $selected)
 }
