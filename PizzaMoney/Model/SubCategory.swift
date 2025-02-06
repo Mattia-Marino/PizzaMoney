@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class SubCategory {
+class SubCategory {
     var id = UUID()
     var title: String
     

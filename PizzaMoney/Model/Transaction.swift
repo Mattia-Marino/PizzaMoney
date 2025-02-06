@@ -8,7 +8,7 @@ final class Transaction {
     var title: String
     /* SwiftData non gestisce benissimo l'ereditarietà.
      * La categoria può essere sia principale che sottocategoria. */
-    var categoryID: UUID?
+    var categoryID: SubCategory? = nil
     var transactionType: TransactionType = TransactionType.expense
     var amount: Double
     

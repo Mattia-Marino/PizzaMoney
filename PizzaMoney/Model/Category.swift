@@ -9,9 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Category {
-    var id = UUID()
-    var title: String
+final class Category : SubCategory {
     var icon: String? = nil
     var color: String = "#000000" //TODO: func to generate random color
     var subCategories: Array<SubCategory> = []
