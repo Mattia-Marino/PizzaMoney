@@ -20,13 +20,17 @@ struct AccountsWalletView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Total")
-                        .font(.headline)
+                        .font(.system(size: 30))
+                        .fontWeight(.medium)
                         .foregroundColor(.black)
                     Spacer()
                     Button(action: {
                         isValueVisible.toggle()
                     }) {
-                        Image(systemName: isValueVisible ? "eye" : "eye.slash")
+                        Image(systemName: isValueVisible ? "eye.fill" : "eye.slash.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 34, height: 26)
                             .foregroundColor(.black)
                     }
                 }
@@ -34,8 +38,9 @@ struct AccountsWalletView: View {
                 if isValueVisible {
                     HStack {
                         Spacer()
-                        Text("Card value: \(String(format: "%.2f", value))")
-                            .font(.headline)
+                        Text("€\(String(format: "%.2f", value))")
+                            .font(.system(size: 45))
+                            .fontWeight(.bold)
                             .foregroundColor(.black)
                         Spacer()
                     }
@@ -57,5 +62,5 @@ struct AccountsWalletView: View {
 }
 
 #Preview {
-    AccountsWalletView(value: 400000)
+    AccountsWalletView(value: 32524.98)
 }
