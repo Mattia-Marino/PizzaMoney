@@ -8,8 +8,8 @@ import Foundation
 import SwiftData
 
 @Model
-class Wallet {
-    var id = UUID()
+class Wallet : Identifiable {
+    @Attribute(.unique) var id = UUID()
     var name: String
     var initialAmount: Double
     var transactions: [Transaction] = []
