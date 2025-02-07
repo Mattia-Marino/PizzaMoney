@@ -32,7 +32,7 @@ struct CarouselView: View {
                         selected = bank
                     }) {
                         Text(bank)
-                            .padding()
+                            .padding(10)
                             .background(
                                 RoundedRectangle(cornerRadius: 50, style: .continuous).fill(color)
                             )
