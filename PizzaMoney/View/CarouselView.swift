@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CarouselView: View {
     
-    var banks : [String]
-    @Binding var selected : String
+    var wallets : [Wallet]
+    @Binding var selected : Wallet?
     
     //TODO: da cambiare quando lo schema dati sarà completato
     
@@ -20,18 +20,18 @@ struct CarouselView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(banks, id: \.self) { bank in
+                ForEach(wallets) { wallet in
                     
-                    let color = if selected == bank {
+                    let color = if selected == wallet {
                         selectedColor
                     } else {
                         unselectedColor
                     }
                                         
                     Button(action: {
-                        selected = bank
+                        selected = wallet
                     }) {
-                        Text(bank)
+                        Text(wallet.name)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 50, style: .continuous).fill(color)
@@ -47,8 +47,10 @@ struct CarouselView: View {
     }
 }
 
-#Preview {
-    @Previewable var banks = ["Contesa San Paolo", "Banca Inulia", "BananaRepublic"]
-    @Previewable @State var selected = "Contesa San Paolo"
-    return CarouselView(banks: banks, selected: $selected)
-}
+
+ #Preview {
+     @Previewable var wallets = createMockWallets()
+     @Previewable @State var selected : Wallet? = nil
+     CarouselView(wallets: wallets, selected: $selected)
+ }
+ 

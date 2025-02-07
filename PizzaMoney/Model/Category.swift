@@ -9,8 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-class Category {
-    var id = UUID()
+class Category : Identifiable {
+    @Attribute(.unique) var id = UUID()
     var title: String
     var icon: String? = nil
     var color: String = "#000000" //TODO: func to generate random color
