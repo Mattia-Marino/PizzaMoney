@@ -11,12 +11,20 @@ import SwiftUI
 struct TotalsView: View {
 
     var body: some View {
-        var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        @State var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        
+        @State var endDate: Date = Date()
+        
+        var wallets = createMockWallets() //TODO: replace with actual query
+        
+        @State var currentWallet: Wallet? = wallets.first
         
         
         NavigationStack{
             VStack{
-                // Placeholder componente selettore conto
+                
+                CarouselView(wallets: wallets, selected: $currentWallet)
+                    .padding(.bottom, 20)
                 
                 HStack{
                     
@@ -24,7 +32,7 @@ struct TotalsView: View {
                                displayedComponents: .date)
                     .labelsHidden()
                     
-                    DatePicker("", selection: .constant(Date()),
+                    DatePicker("", selection: .constant(endDate),
                                displayedComponents: .date)
                     .labelsHidden()
                     

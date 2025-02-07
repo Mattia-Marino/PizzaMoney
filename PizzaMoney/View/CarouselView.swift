@@ -38,7 +38,8 @@ struct CarouselView: View {
                             )
                             .foregroundStyle(.white)
                             .font(.headline)
-                    }
+                    }.padding(.leading, wallets.first == wallet ? 60 : 0)
+                        .padding(.trailing, wallets.last == wallet ? 60 : 0)
                     
                 }
             }
