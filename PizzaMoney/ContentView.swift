@@ -41,7 +41,7 @@ struct ContentView: View {
                 
             }
             Tab("Transactions", systemImage: "list.bullet"){
-                
+                TransactionView()
             }
             Tab("Settings", systemImage: "gearshape"){
                 
