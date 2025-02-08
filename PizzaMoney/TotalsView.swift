@@ -11,67 +11,105 @@ import Charts
 
 struct TotalsView: View {
     
+    @State var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+    
+    @State var endDate: Date = Date()
+    
+    let wallets: [Wallet] = createMockWallets() //TODO: replace with actual query
+    
+    @State var currentWallet: Wallet?
+    
     var body: some View {
-        @State var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
         
-        @State var endDate: Date = Date()
+        var categoriesInWallet = currentWallet?.categoriesWithTotals(from: startDate, to: endDate)
         
-        var wallets = createMockWallets() //TODO: replace with actual query
+        var totalTransactions = currentWallet?.totalTransactions(
+            from: startDate,
+            to: endDate
+        ) ?? 0
         
-        @State var currentWallet: Wallet? = wallets.first
+        var transactionsSign = totalTransactions < 0 ? "-" : "+"
         
+        var transactionsColor = totalTransactions < 0 ? Color.red : Color.green
         
         NavigationStack{
+            
             VStack{
                 
                 CarouselView(wallets: wallets, selected: $currentWallet)
                     .padding(.bottom, 20)
                 
+                
                 HStack{
                     
-                    DatePicker("", selection: .constant(startDate),
+                    DatePicker("", selection: $startDate,
                                displayedComponents: .date)
                     .labelsHidden()
                     
-                    DatePicker("", selection: .constant(endDate),
+                    DatePicker("", selection: $endDate,
                                displayedComponents: .date)
                     .labelsHidden()
                     
                 }
-            }
-            
-            Chart(Array(currentWallet?.totalsByCategory(from: startDate, to: endDate).map { (key, value) in
-                (name: key, total: value)
-            } ?? []), id: \.name) { element in
-                SectorMark(
-                    angle: .value("Totals", element.total),
-                    innerRadius: .ratio(0.618),
-                    angularInset: 1.5
-                )
-                .cornerRadius(5)
-                .foregroundStyle(by: .value("Name", element.name))
-            }
-            .frame(width: 310, height: 270)
-            .chartBackground { chartProxy in
-                GeometryReader { geometry in
-                    let frame = geometry[chartProxy.plotAreaFrame]
-                    VStack {
-                        Text("Most Sold Style")
+                
+                Chart(categoriesInWallet ?? [], id: \.0.id) { (category, total) in
+                    SectorMark(
+                        angle: .value("Totals", total),
+                        innerRadius: .ratio(0.618),
+                        angularInset: 1.5
+                    )
+                    .cornerRadius(5)
+                    .foregroundStyle(Color(hex: category.color))
+                }
+                .frame(width: 310, height: 270)
+                .chartBackground { chartProxy in
+                    GeometryReader { geometry in
+                        let frame = geometry[chartProxy.plotAreaFrame]
+                        VStack {
+                            Text(
+                                String(
+                                    format: "\(transactionsSign)%.2f",
+                                    currentWallet?.totalTransactions(
+                                        from: startDate,
+                                        to: endDate
+                                    ) ?? 0
+                                )
+                            )
                             .font(.callout)
-                            .foregroundStyle(.secondary)
-                        Text("Ciaone")
+                            .foregroundStyle(transactionsColor)
+                            Text(
+                                String(
+                                    format: "%.2f",
+                                    currentWallet?.totalAmount ?? 0
+                                )
+                            )
                             .font(.title2.bold())
                             .foregroundColor(.primary)
+                            
+                        }
+                        .position(x: frame.midX, y: frame.midY)
                     }
-                    .position(x: frame.midX, y: frame.midY)
                 }
+                
+                List {
+                    ForEach(categoriesInWallet?.map { $0.0 } ?? []) { category in
+                        Text(category.title)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .scrollContentBackground(.hidden)
+                
             }
+            
+            
             
             
             .navigationTitle("Totals")
             .navigationBarTitleDisplayMode(.inline)
             
         }
+        
+        
         
     }
     
