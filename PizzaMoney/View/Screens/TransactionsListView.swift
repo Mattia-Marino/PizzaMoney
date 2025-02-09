@@ -20,65 +20,109 @@ struct TransactionsListView: View {
     
     var body: some View {
         
-        VStack {
+        NavigationStack {
             
-            CarouselView(wallets: wallets, selected: $currentWallet)
-                .padding(.bottom, 20)
-            
-            HStack {
-                DatePicker("", selection: $startDate, displayedComponents: .date)
-                    .labelsHidden()
+            VStack {
                 
-                DatePicker("", selection: $endDate, displayedComponents: .date)
-                    .labelsHidden()
+                CarouselView(wallets: wallets, selected: $currentWallet)
+                    .padding(.bottom, 20)
+                
+                HStack {
+                    DatePicker("", selection: $startDate, displayedComponents: .date)
+                        .labelsHidden()
+                    
+                    DatePicker("", selection: $endDate, displayedComponents: .date)
+                        .labelsHidden()
+                }
+                
+                if let currentWallet = currentWallet {
+                    let groupedTransactions = transactionsGroupedByDay(transactions: filteredTransactions)
+                    
+                    let interval = (endDate.timeIntervalSince(startDate)) / 5
+                    
+                    // Select 3 evenly spaced dates at 1/4, 2/4, and 3/4 of the interval
+                    let intermediateDates = (1...4).map { startDate.addingTimeInterval(Double($0) * interval) }
+                    
+                    Chart {
+                        
+                        ForEach(groupedTransactions, id: \.0) { (date, transactions) in
+                            if let incomes = transactions["income"] {
+                                BarMark(
+                                    x: .value("Date", date),
+                                    y: .value("Total", incomes.reduce(0) { $0 + $1.amount })
+                                )
+                                .foregroundStyle(.green)
+                            }
+                            
+                            if let expenses = transactions["expense"] {
+                                BarMark(
+                                    x: .value("Date", date),
+                                    y: .value("Total", expenses.reduce(0) { $0 - $1.amount }) // Negative expenses
+                                )
+                                .foregroundStyle(.red)
+                            }
+                        }
+                        
+                        ForEach(intermediateDates, id: \.self) { date in
+                            RuleMark(x: .value("Date", date))
+                                .lineStyle(.init(lineWidth: 1, dash: [5]))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .chartXAxis {
+                        
+                        
+                        AxisMarks(values: intermediateDates) {
+                            AxisValueLabel(format: .dateTime.day().month())
+                        }
+                    }
+                    .frame(width: 310, height: 250)
+                    .padding(.top, 20)
+                    
+                    List{
+                        ForEach(filteredTransactions) {transaction in
+                            RowView(transaction: transaction)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .scrollContentBackground(.hidden)
+                    
+                } else {
+                    Text("Select a wallet to display data")
+                        .font(.callout)
+                        .foregroundColor(.secondary)
+                }
             }
             
-            if let currentWallet = currentWallet {
-                let groupedTransactions = transactionsGroupedByDay(transactions: filteredTransactions)
-                
-                Chart {
-                    ForEach(groupedTransactions, id: \.0) { (date, transactions) in
-                        if let incomes = transactions["income"] {
-                            BarMark(
-                                x: .value("Date", date, unit: .day),
-                                y: .value("Income Total", incomes.reduce(0) { $0 + $1.amount })
-                            )
-                            .foregroundStyle(.green)
-                        }
-                        if let expenses = transactions["expense"] {
-                            BarMark(
-                                x: .value("Date", date, unit: .day),
-                                y: .value("Expense Total", expenses.reduce(0) { $0 + $1.amount })
-                            )
-                            .foregroundStyle(.red)
+            .onAppear {
+                Task {
+                    if currentWallet == nil, let firstWallet = wallets.first {
+                        await MainActor.run {
+                            currentWallet = firstWallet
                         }
                     }
                 }
-                .chartXAxis {
-                    AxisMarks(values: .stride(by: .day)) {
-                        AxisValueLabel(format: .dateTime.day().month())
-                    }
-                }
-                .frame(width: 310, height: 270)
-                
-                List{
-                    ForEach(filteredTransactions) {transaction in
-                        RowView(transaction: transaction)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .scrollContentBackground(.hidden)
-                
-            } else {
-                Text("Select a wallet to display data")
-                    .font(.callout)
-                    .foregroundColor(.secondary)
             }
+            
+            .navigationTitle("Transactions")
+            .navigationBarTitleDisplayMode(.inline)
+            
+            .toolbar {
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        print("Plus button was tapped")
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+                
+            }
+            
         }
         
-        .navigationTitle("Totals")
-        .navigationBarTitleDisplayMode(.inline)
     }
+    
 }
 
 private struct RowView: View {
