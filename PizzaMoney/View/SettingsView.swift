@@ -25,21 +25,33 @@ struct SettingsView: View {
                 .padding(.trailing, 275.0)
             Divider()
                 .frame(width: 350.0)
-            Picker(selection: .constant(1), label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
+            Picker(selection: .constant(1), label: Text("Picker"))
+            {
                 Text("System").tag(1)
                 /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
                 
             }
+            
             .padding(.top, -48.0)
             .padding(.leading, 250.0)
-
-            Spacer()
+            Spacer()}
+        
+            VStack{
+                HStack{
+                    Text("Tools")
+                        .font(.system(size: 25, weight:       .bold))
+                        .fontWeight(.regular)
+                        .padding(.bottom, 600.0)
+                        .padding(.leading, 14.0)
+                        .foregroundStyle(Color.gray);
+                    Spacer()
+                }
+            }
         }
     }
-}
-            
-        
-
-#Preview {
-    SettingsView()
-}
+    
+    
+    
+    #Preview {
+        SettingsView()
+    }
