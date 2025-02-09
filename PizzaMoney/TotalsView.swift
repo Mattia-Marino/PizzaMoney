@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import _SwiftData_SwiftUI
 
 
 struct TotalsView: View {
@@ -15,7 +16,7 @@ struct TotalsView: View {
     
     @State var endDate: Date = Date()
     
-    let wallets: [Wallet] = createMockWallets() //TODO: replace with actual query
+    @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
     
     @State var currentWallet: Wallet?
     
@@ -93,7 +94,7 @@ struct TotalsView: View {
                 
                 List {
                     ForEach(categoriesInWallet?.map { $0.0 } ?? []) { category in
-                        Text(category.title)
+                        RowView(category: category)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -101,7 +102,15 @@ struct TotalsView: View {
                 
             }
             
-            
+            .onAppear {
+                Task {
+                    if currentWallet == nil, let firstWallet = wallets.first {
+                        await MainActor.run {
+                            currentWallet = firstWallet
+                        }
+                    }
+                }
+            }
             
             
             .navigationTitle("Totals")
@@ -109,13 +118,27 @@ struct TotalsView: View {
             
         }
         
-        
-        
     }
     
 }
 
+struct RowView: View {
+    var category: Category
+    
+    var body: some View {
+        HStack {
+            Image(systemName: category.icon ?? "elipsis.circle")
+                .foregroundStyle(Color(hex: category.color))
+            Text(category.title)
+                .foregroundStyle(Color(hex: category.color))
+            Spacer()
+            Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
 #Preview {
     TotalsView()
-        .modelContainer(for: Transaction.self, inMemory: true)
+        .modelContainer(previewContainer)
 }

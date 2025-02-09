@@ -13,6 +13,7 @@ class Wallet : Identifiable {
     var name: String
     var initialAmount: Double
     var transactions: [Transaction] = []
+    var timestamp = Date()
     
     init(name: String, initialAmount: Double) {
         self.name = name
