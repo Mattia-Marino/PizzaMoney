@@ -122,7 +122,7 @@ struct TotalsView: View {
     
 }
 
-struct RowView: View {
+private struct RowView: View {
     var category: Category
     
     var body: some View {
