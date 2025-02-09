@@ -12,8 +12,6 @@ struct CarouselView: View {
     var wallets : [Wallet]
     @Binding var selected : Wallet?
     
-    //TODO: da cambiare quando lo schema dati sarà completato
-    
     let selectedColor = Color.blue
     let unselectedColor = Color.gray
     
@@ -21,36 +19,35 @@ struct CarouselView: View {
         ScrollView(.horizontal) {
             HStack {
                 ForEach(wallets) { wallet in
-                    
-                    let color = if selected == wallet {
-                        selectedColor
-                    } else {
-                        unselectedColor
-                    }
-                                        
                     Button(action: {
                         selected = wallet
                     }) {
                         Text(wallet.name)
                             .padding()
                             .background(
-                                RoundedRectangle(cornerRadius: 50, style: .continuous).fill(color)
+                                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                    .fill(selected?.id == wallet.id ? selectedColor : unselectedColor)
                             )
                             .foregroundStyle(.white)
                             .font(.headline)
-                    }
+                    }.padding(.leading, wallets.first == wallet ? 60 : 0)
+                        .padding(.trailing, wallets.last == wallet ? 60 : 0)
                     
                 }
             }
             
         }.scrollIndicators(.hidden)
+        
+            .onAppear {
+                selected = wallets.first
+            }
     }
 }
 
 
- #Preview {
-     @Previewable var wallets = createMockWallets()
-     @Previewable @State var selected : Wallet? = nil
-     CarouselView(wallets: wallets, selected: $selected)
- }
- 
+#Preview {
+    @Previewable var wallets = createMockWallets()
+    @Previewable @State var selected : Wallet? = nil
+    CarouselView(wallets: wallets, selected: $selected)
+}
+
