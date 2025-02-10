@@ -127,8 +127,16 @@ struct EditCategoriesView: View {
                                 }
                             }.frame(maxWidth: .infinity, alignment: .leading).padding().padding([.horizontal],20)
                         }.padding()
+                           
                     }
-                }.searchable(text: $searchText)
+                }.searchable(text: $searchText) .toolbar {
+                    ToolbarItem() {
+                        NavigationLink(destination: EmptyView()) {
+                            Image(systemName: "plus.circle.fill")
+                        }
+                    }
+                                
+                }.navigationTitle("Edit transaction").navigationBarTitleDisplayMode(.inline)
                 
             }
         }
