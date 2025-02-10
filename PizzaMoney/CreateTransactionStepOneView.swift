@@ -112,6 +112,10 @@ struct CreateTransactionStepOneView: View {
                                            }
                                        }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
                                             .onTapGesture {
+                                                    
+                                                if appSharedState.selectedSubCategory == subcategory.title{
+                                                    return appSharedState.selectedSubCategory = ""
+                                                }
                                                  appSharedState.selectedSubCategory = subcategory.title
                                             }
                                         Divider()
@@ -128,8 +132,7 @@ struct CreateTransactionStepOneView: View {
                             NavigationLink(destination:CreateTransactionStepTwoView()){
                                 Text("Amount")
                                 Image(systemName: "chevron.right")
-                            }
-                       
+                            }.disabled(appSharedState.title == "")
                     }
                     
                 }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
@@ -169,6 +172,8 @@ struct CreateTransactionStepOneView: View {
         }
         return subCats
     }
+    
+    
 }
 
 #Preview {
