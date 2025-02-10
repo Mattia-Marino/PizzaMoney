@@ -10,9 +10,10 @@ import SwiftUI
 
 struct TotalsView: View {
 
+    @EnvironmentObject var appSharedState : AppSharedState
     var body: some View {
         NavigationStack{
-            Text("Hello World")
+            Text(appSharedState.amount.description)
         }
 
     }

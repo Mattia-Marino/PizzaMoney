@@ -1,8 +1,19 @@
 import SwiftUI
 import SwiftData
 
+class AppSharedState: ObservableObject {
+    @Published var bank = "Contesa San Paolo"
+    @Published var title = ""
+    @Published var data : Date = Date.now
+    @Published var amount = 0.0
+    @Published var selectedSubCategory: String = ""
+    @Published var type = "expanse"
+}
+
+
 @main
 struct PizzaMoneyApp: App {
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Transaction.self,
@@ -17,11 +28,15 @@ struct PizzaMoneyApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
 
+    @StateObject var appSharedState : AppSharedState = AppSharedState()
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+        .environmentObject(appSharedState)
     }
 }
+
