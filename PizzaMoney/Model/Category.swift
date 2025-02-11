@@ -8,20 +8,24 @@
 import Foundation
 import SwiftData
 
+
+
 @Model
 class Category {
     var id = UUID()
     var title: String
     var icon: String? = nil
     var color: String = "#000000" //TODO: func to generate random color
-    var subCategories: Array<Category>? = nil
+    var subCategories: [SubCategory] = []
         
-    init(id: UUID = UUID(), title: String, icon: String? = nil, color: String, subCategories: Array<Category>? = nil) {
+    init(id: UUID = UUID(), title: String, icon: String? = nil, color: String) {
         self.id = id
         self.title = title
         self.icon = icon
         self.color = color
-        self.subCategories = subCategories
+        self.subCategories = []
+        
+        subCategories.append(SubCategory(title: "other", category: self))
     }
 
 }

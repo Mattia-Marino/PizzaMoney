@@ -14,7 +14,7 @@ struct CreateTransactionStepTwoView: View {
     
     @EnvironmentObject var appSharedState : AppSharedState
     @Environment(\.dismiss) private var dismiss
-    
+    @Environment(\.modelContext) private var modelContext
     
     @State private var date = Date()
     let dateRange: ClosedRange<Date> = {
@@ -69,7 +69,7 @@ struct CreateTransactionStepTwoView: View {
                     .datePickerStyle(CompactDatePickerStyle())
                     .clipped()
                     .labelsHidden()
-         
+                
                 Spacer()
                 //buttons
                 HStack{
@@ -87,18 +87,40 @@ struct CreateTransactionStepTwoView: View {
                     .foregroundStyle(.white)
                     .clipShape(Capsule())
                     
-                 
-                        
-                        Label("Save", systemImage: "arrow.up.circle")
-                            .padding(10)
-                            .padding([.horizontal],30)
-                            .background(Color.blue)
-                            .foregroundStyle(.white)
-                            .clipShape(Capsule())
-                    
+                        NavigationLink(destination: EmptyView()){
+                            Button(action:{
+                                let newTransaction = Transaction(
+                                    title: appSharedState.title,
+                                    date: appSharedState.data,
+                                    amount: appSharedState.amount,
+                                    transactionType: appSharedState.type,
+                                    category: appSharedState.selectedSubCategory
+                                )
+                                modelContext.insert(newTransaction)
+                                
+                                //reset appSharedState after insert
+                                appSharedState.bank = "Contesa San Paolo"
+                                appSharedState.title = ""
+                                appSharedState.data = Date.now
+                                appSharedState.amount = 0.0
+                                appSharedState.selectedSubCategory = nil
+                                appSharedState.type = TransactionType.expense
+                                
+                                
+                            }){
+                                
+                                Label("Save", systemImage: "arrow.up.circle")
+                                    .padding(10)
+                                    .padding([.horizontal],30)
+                                    .background(Color.blue)
+                                    .foregroundStyle(.white)
+                                    .clipShape(Capsule())
+                            }
+                        }
                 }
+                
             }.padding().toolbar {
-            
+                
             }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
         }
     }

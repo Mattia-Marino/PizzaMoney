@@ -13,7 +13,7 @@ struct TotalsView: View {
     @EnvironmentObject var appSharedState : AppSharedState
     var body: some View {
         NavigationStack{
-            Text(appSharedState.amount.description)
+           Text("totals view")
         }
 
     }

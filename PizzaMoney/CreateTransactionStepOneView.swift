@@ -53,7 +53,7 @@ struct CreateTransactionStepOneView: View {
         )
     ]
     
- 
+    
     @State private var selectedCategory: String = "Subscription"
     @State private var searchText: String = ""
     
@@ -75,8 +75,8 @@ struct CreateTransactionStepOneView: View {
                         Label("Type", systemImage: "")
                         Spacer()
                         Picker(selection: $appSharedState.type, label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
-                            Text("Expanse").tag("expanse")
-                            Text("Incoming").tag("incoming")
+                            Text("Expanse").tag(TransactionType.expense)
+                            Text("Incoming").tag(TransactionType.income)
                         }
                     }
                     
@@ -86,6 +86,7 @@ struct CreateTransactionStepOneView: View {
                     Text("Category")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
+                      
                     //categories
                     ScrollView{
                         ForEach(searchResults) { category in
@@ -104,19 +105,21 @@ struct CreateTransactionStepOneView: View {
                                 ForEach(searchSubCat(categories: category.subCategories ?? []), id:\.self) { subcategory in
                                     
                                     VStack(alignment:.leading){
-                                       HStack{
-                                           Text(subcategory.title).foregroundStyle(Color(hex: subcategory.color))
-                                               Spacer()
-                                           if appSharedState.selectedSubCategory == subcategory.title{
-                                               Image(systemName: "checkmark").foregroundStyle(.blue)
-                                           }
-                                       }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
-                                            .onTapGesture {
-                                                    
-                                                if appSharedState.selectedSubCategory == subcategory.title{
-                                                    return appSharedState.selectedSubCategory = ""
+                                        HStack{
+                                            Text(subcategory.title).foregroundStyle(Color(hex: subcategory.color))
+                                            Spacer()
+                                            
+                                                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                                                    Image(systemName: "checkmark").foregroundStyle(.blue)
                                                 }
-                                                 appSharedState.selectedSubCategory = subcategory.title
+                                            
+                                        }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
+                                            .onTapGesture {
+                                                
+                                                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                                                    return appSharedState.selectedSubCategory = nil
+                                                }
+                                               appSharedState.selectedSubCategory = subcategory
                                             }
                                         Divider()
                                     }.frame(maxWidth: .infinity, alignment: .leading).padding([.horizontal],30)
@@ -128,11 +131,11 @@ struct CreateTransactionStepOneView: View {
             }.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
                 .toolbar {
                     
-                        ToolbarItem(placement: .navigationBarTrailing){
-                            NavigationLink(destination:CreateTransactionStepTwoView()){
-                                Text("Amount")
-                                Image(systemName: "chevron.right")
-                            }.disabled(appSharedState.title == "")
+                    ToolbarItem(placement: .navigationBarTrailing){
+                        NavigationLink(destination:CreateTransactionStepTwoView()){
+                            Text("Amount")
+                            Image(systemName: "chevron.right")
+                        }.disabled(appSharedState.title == "")
                     }
                     
                 }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
@@ -161,11 +164,11 @@ struct CreateTransactionStepOneView: View {
             //self.catWithSub = categories
             return categories
         }
-        var subCats = categories.filter {
+        let subCats = categories.filter {
             $0.title.lowercased().contains(searchText.lowercased())
         }
         if subCats.count > 0 {
-            var catFound = categories.filter { $0.title.lowercased()
+            let catFound = categories.filter { $0.title.lowercased()
                 == searchText.lowercased()
             }
             //self.catWithSub.append(contentsOf: catFound)

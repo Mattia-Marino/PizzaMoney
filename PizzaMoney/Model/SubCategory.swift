@@ -14,12 +14,11 @@ import SwiftData
 class SubCategory {
     var id = UUID()
     var title: String
-    var icon: String? = nil
-    var color: String = "#000000" //TODO: func to generate random color
+    let category : Category
     
-    init(title: String, icon: String? = nil, color: String = "#000000") {
+    init(id: UUID = UUID(), title: String, category: Category) {
+        self.id = id
         self.title = title
-        self.icon = icon
-        self.color = color
+        self.category = category
     }
 }

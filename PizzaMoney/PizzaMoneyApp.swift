@@ -3,11 +3,11 @@ import SwiftData
 
 class AppSharedState: ObservableObject {
     @Published var bank = "Contesa San Paolo"
-    @Published var title = ""
+    @Published var title : String = ""
     @Published var data : Date = Date.now
     @Published var amount = 0.0
-    @Published var selectedSubCategory: String = ""
-    @Published var type = "expanse"
+    @Published var selectedSubCategory: Category? = nil
+    @Published var type: TransactionType = TransactionType.expense
 }
 
 
