@@ -26,10 +26,12 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    Picker(selection: .constant(1), label: Text("Picker"))
+                    Picker(selection: .constant(1), label: Text("Picker")
+                        )
                     {
                         Text("System").tag(1)
                         /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        
                         
                     }.padding(.trailing, 10.0)
                     
@@ -41,25 +43,33 @@ struct SettingsView: View {
                 
                 
                 HStack{
+                    
                     Text("Tools")
                         .font(.system(size: 25, weight:       .bold))
                         .fontWeight(.regular)
                         .padding(.leading, 14.0)
                         .foregroundStyle(Color.gray);
                     
-                Spacer()
+                    Spacer()
                     
+                }
+                
+                HStack{
+                    Text("Edit categories")
+                        .font(.system(size: 20, weight: .regular))
+                        .padding(.leading, 10.0);                Spacer()
+                    Picker(selection: .constant(1), label: Text("Picker"))
+                    {
+                        Text("System2").tag(1)
+                        /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        Spacer()
+                            
+                    }
                 }
                 Divider()
     
                 
-                Picker(selection: .constant(1), label: Text("Picker"))
-                {
-                    Text("System").tag(1)
-                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
-                    Spacer()
-                        
-                }
+                
                 Spacer()
                 
                 
