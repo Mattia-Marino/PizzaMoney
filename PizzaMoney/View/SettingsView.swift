@@ -32,31 +32,35 @@ struct SettingsView: View {
                         /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
                         
                     }.padding(.trailing, 10.0)
-                   
-                    }
-                    
-                    Divider()
-                    
-                    
-                    
-                    
-                    HStack{
-                        Text("Tools")
-                            .font(.system(size: 25, weight:       .bold))
-                            .fontWeight(.regular)
-                            .padding(.leading, 14.0)
-                            .foregroundStyle(Color.gray);
-                        
-                        Spacer()
-                        
-                    }
-                    
-                    Divider()
-                    
-                    
-                    Spacer()
                     
                 }
+                
+                Divider()
+                
+                
+                
+                
+                HStack{
+                    Text("Tools")
+                        .font(.system(size: 25, weight:       .bold))
+                        .fontWeight(.regular)
+                        .padding(.leading, 14.0)
+                        .foregroundStyle(Color.gray);
+                    
+                Spacer()
+                    
+                }
+                Divider()
+    
+                
+                Picker(selection: .constant(1), label: Text("Picker"))
+                {
+                    Text("System").tag(1)
+                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                    Spacer()
+                        
+                }
+                Spacer()
                 
                 
                 
@@ -69,8 +73,8 @@ struct SettingsView: View {
         }
         
     }
-
     
+}
     
 #Preview {
     SettingsView()
