@@ -7,73 +7,28 @@
 
 
 /**
-    Inserire che se viene cliccata l'intestazione deve essere utilizzata la categoria other
+ Inserire che se viene cliccata l'intestazione deve essere utilizzata la categoria other
  */
 
 import SwiftUI
 import SwiftData
 struct CreateTransactionStepOneView: View {
     @EnvironmentObject var appSharedState : AppSharedState
-    @Environment(\.modelContext) var viewContext
-    let categories = [
-        Category(
-            title: "Food",
-            icon: "fork.knife",
-            color: "#FF6347",
-            subCategories: [
-                SubCategory(title: "Fruits"),
-                SubCategory(title: "Vegetables"),
-                SubCategory(title: "Meat")
-            ]
-        ),
-        Category(
-            title: "Technology",
-            icon: "desktopcomputer",
-            color: "#1E90FF",
-            subCategories: [
-                SubCategory(title: "Smartphones"),
-                SubCategory(title: "Laptops"),
-                SubCategory(title: "Wearables")
-            ]
-        ),
-        Category(
-            title: "Entertainment",
-            icon: "film",
-            color: "#FF69B4",
-            subCategories: [
-                SubCategory(title: "Movies"),
-                SubCategory(title: "Music"),
-                SubCategory(title: "Video Games")
-            ]
-        ),
-        Category(
-            title: "Travel",
-            icon: "airplane",
-            color: "#32CD32",
-            subCategories: [
-                SubCategory(title: "Destinations"),
-                SubCategory(title: "Transportation"),
-                SubCategory(title: "Accommodation")
-            ]
-        )
-    ]
+    @Environment(\.modelContext) private var modelContext
     
-  
+    
     @State private var selectedCategory: String = "Subscription"
     @State private var searchText: String = ""
     
+    @Query private var categories: [Category]
     
     var body: some View {
         NavigationStack{
             VStack(){
-                //Text(appSharedState.amount.description)
-                //Text(appSharedState.data.formatted())
-                //Text(appSharedState.bank.description)
                 VStack{
                     HStack(spacing: 50){
                         Label("Title", systemImage: "")
                         TextField("Netplis", text: $appSharedState.title)
-                        
                     }
                     Divider()
                     HStack(spacing: 50){
@@ -91,48 +46,49 @@ struct CreateTransactionStepOneView: View {
                     Text("Category")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                      
-                    //categories
-                    ScrollView{
-                        ForEach(searchResults) { category in
+                    
+                }
+                //categories
+                ScrollView{
+                    ForEach(searchResults) { category in
+                        
+                        HStack {
+                            Image(systemName: category.icon ?? "")
+                                .foregroundStyle(Color(hex: category.color))
+                            Text(category.title)                            .foregroundStyle(Color(hex: category.color))
                             
-                            HStack {
-                                Image(systemName: category.icon ?? "")
-                                    .foregroundStyle(Color(hex: category.color))
-                                Text(category.title)                            .foregroundStyle(Color(hex: category.color))
-                                
-                                Spacer()
-                            }.padding([.top],20)
-                            
-                            Divider()
-                            VStack(alignment: .leading){
-                                ForEach(searchSubCat(categories: category.subCategories ?? []), id:\.self) { subcategory in
-                                    SubCategoryRow(subcategory:subcategory)
-                                }
+                            Spacer()
+                        }.padding([.top],20)
+                        
+                        Divider()
+                        VStack(alignment: .leading){
+                            ForEach(searchSubCat(categories: category.subCategories ?? []), id:\.self) { subcategory in
+                                SubCategoryRow(subcategory:subcategory)
                             }
                         }
-                    }.padding([.horizontal],20)
-                }.padding([.top],20)
-            }.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
-                .toolbar {
-                    
-                    ToolbarItem(placement: .navigationBarTrailing){
-                        NavigationLink(destination:CreateTransactionStepTwoView()){
-                            Text("Amount")
-                            Image(systemName: "chevron.right")
-                        }.disabled(appSharedState.title == "")
                     }
-                    
-                }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
-        }
+                }.padding([.horizontal],20)
+            }.padding([.top],20).toolbar {
+                
+                ToolbarItem(placement: .navigationBarTrailing){
+                    NavigationLink(destination:CreateTransactionStepTwoView()){
+                        Text("Amount")
+                        Image(systemName: "chevron.right")
+                    }.disabled(appSharedState.title == "")
+                }
+                
+            }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
+        }.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
+            
     }
+    
     var searchResults: [Category]{
         if searchText.isEmpty{
             return categories
         }else{
             print(searchText)
             return categories.filter {
-            
+                
                 filtSubCat(cats: $0.subCategories ?? [])
             }
         }
@@ -173,17 +129,17 @@ struct SubCategoryRow:View{
                 Text(subcategory.title)
                 Spacer()
                 
-                    if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
-                        Image(systemName: "checkmark").foregroundStyle(.blue)
-                    }
+                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                    Image(systemName: "checkmark").foregroundStyle(.blue)
+                }
                 
             }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
                 .onTapGesture {
                     
-                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                    if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
                         return appSharedState.selectedSubCategory = nil
                     }
-                   appSharedState.selectedSubCategory = subcategory
+                    appSharedState.selectedSubCategory = subcategory
                 }
             Divider()
         }.frame(maxWidth: .infinity, alignment: .leading).padding([.horizontal],30)

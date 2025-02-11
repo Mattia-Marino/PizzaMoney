@@ -14,42 +14,67 @@ struct TotalsView: View {
    
     
     
-    @Query(sort:\Category.title) var categories:[Category]
+    @Query(sort:\Transaction.title) var categories:[Transaction]
     var body: some View {
         NavigationStack{
-            Button(action:{
-                print("dsgsdfgd")
-                loadCategories()
-            }){
-                Label("Load Categories", systemImage: "plus")
+            ForEach(categories){category in
+                List{
+                    Text(category.category?.title ?? "")
+                }
+                .navigationBarTitle(category.title)
             }
         }
 
     }
-    func loadCategories(){
-        modelContext.insert(Category(
-            title: "Food",
-            icon: "fork.knife",
-            color: "#FF6347"
-            
-        ))
-        modelContext.insert(Category(
-            title: "Technology",
-            icon: "desktopcomputer",
-            color: "#1E90FF"
-           
-        ))
-        modelContext.insert(Category(
-            title: "Entertainment",
-            icon: "film",
-            color: "#FF69B4"
-        ))
-        modelContext.insert(    Category(
-            title: "Travel",
-            icon: "airplane",
-            color: "#32CD32"
-        ))
-    }
+  /*  func loadCategories(){
+        
+        let categories = [
+            Category(
+                title: "Food",
+                icon: "fork.knife",
+                color: "#FF6347",
+                subCategories: [
+                    SubCategory(title: "Fruits"),
+                    SubCategory(title: "Vegetables"),
+                    SubCategory(title: "Meat")
+                ]
+            ),
+            Category(
+                title: "Technology",
+                icon: "desktopcomputer",
+                color: "#1E90FF",
+                subCategories: [
+                    SubCategory(title: "Smartphones"),
+                    SubCategory(title: "Laptops"),
+                    SubCategory(title: "Wearables")
+                ]
+            ),
+            Category(
+                title: "Entertainment",
+                icon: "film",
+                color: "#FF69B4",
+                subCategories: [
+                    SubCategory(title: "Movies"),
+                    SubCategory(title: "Music"),
+                    SubCategory(title: "Video Games")
+                ]
+            ),
+            Category(
+                title: "Travel",
+                icon: "airplane",
+                color: "#32CD32",
+                subCategories: [
+                    SubCategory(title: "Destinations"),
+                    SubCategory(title: "Transportation"),
+                    SubCategory(title: "Accommodation")
+                ]
+            )
+        ]
+        
+        for category in categories {
+            modelContext.insert(category)
+        }
+    }*/
 }
 
 #Preview {

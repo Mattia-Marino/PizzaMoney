@@ -94,7 +94,8 @@ struct CreateTransactionStepTwoView: View {
                                     date: appSharedState.data,
                                     amount: appSharedState.amount,
                                     transactionType: appSharedState.type,
-                                    category: appSharedState.selectedSubCategory
+                                    subCategory: appSharedState.selectedSubCategory,
+                                    category: appSharedState.selectedCategory
                                 )
                                 modelContext.insert(newTransaction)
                                 

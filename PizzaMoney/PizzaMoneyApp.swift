@@ -7,6 +7,7 @@ class AppSharedState: ObservableObject {
     @Published var data : Date = Date.now
     @Published var amount = 0.0
     @Published var selectedSubCategory: SubCategory? = nil
+    @Published var selectedCategory: Category? = nil
     @Published var type: TransactionType = TransactionType.expense
 }
 
