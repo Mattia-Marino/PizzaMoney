@@ -14,11 +14,16 @@ class Category : Identifiable {
     var title: String
     var icon: String? = nil
     var color: String = "#000000" //TODO: func to generate random color
-    var subCategories: Array<Category> = []
-    
-    init(title: String, icon: String? = nil, color: String = "#000000") {
+    var subCategories: [SubCategory] = []
+        
+    init(id: UUID = UUID(), title: String, icon: String? = nil, color: String) {
+        self.id = id
         self.title = title
         self.icon = icon
         self.color = color
+        self.subCategories = []
+        
+        subCategories.append(SubCategory(title: "other", category: self))
     }
+
 }
