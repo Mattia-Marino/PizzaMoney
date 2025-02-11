@@ -93,24 +93,19 @@ struct WalletCard: View {
     var amount: String
     
     var body: some View {
-        HStack {
+        ZStack(alignment: .leading) {
+            Color(.systemGray6)
+                .cornerRadius(12)
+                .shadow(radius: 5)
+            
             VStack(alignment: .leading) {
                 Text(name)
                     .font(.headline)
                 Text("Total: \(amount)")
                     .font(.subheadline)
                     .foregroundColor(.gray)
-            }
-            Spacer()
-            Button(action: {}) {
-                Image(systemName: "trash")
-                    .foregroundColor(.black)
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+            }.padding()
+        }.frame(width: 360, height: 90)
     }
 }
 
