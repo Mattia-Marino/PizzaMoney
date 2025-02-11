@@ -4,9 +4,9 @@ import Charts
 
 struct TransactionsListView: View {
     
-    @State var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+    @AppStorage("filter_startDate") var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
     
-    @State var endDate: Date = Date()
+    @AppStorage("filter_endDate") var endDate: Date = Date()
     
     @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
     
@@ -40,7 +40,7 @@ struct TransactionsListView: View {
                     
                     let interval = (endDate.timeIntervalSince(startDate)) / 5
                     
-                    // Select 3 evenly spaced dates at 1/4, 2/4, and 3/4 of the interval
+                    
                     let intermediateDates = (1...4).map { startDate.addingTimeInterval(Double($0) * interval) }
                     
                     Chart {
@@ -70,10 +70,15 @@ struct TransactionsListView: View {
                         }
                     }
                     .chartXAxis {
-                        
-                        
                         AxisMarks(values: intermediateDates) {
                             AxisValueLabel(format: .dateTime.day().month())
+                                .offset(x: -20)
+                        }
+                    }
+                    .chartYAxis {
+                        AxisMarks() {
+                            AxisValueLabel()
+                                .offset(x: 10) // Shift Y-axis labels left
                         }
                     }
                     .frame(width: 310, height: 250)

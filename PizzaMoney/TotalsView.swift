@@ -12,9 +12,9 @@ import _SwiftData_SwiftUI
 
 struct TotalsView: View {
     
-    @State var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+    @AppStorage("filter_startDate") var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
     
-    @State var endDate: Date = Date()
+    @AppStorage("filter_endDate") var endDate: Date = Date()
     
     @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
     
