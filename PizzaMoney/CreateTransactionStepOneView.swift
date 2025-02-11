@@ -79,7 +79,7 @@ struct CreateTransactionStepOneView: View {
                 
             }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
         }.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
-            
+        
     }
     
     var searchResults: [Category]{
@@ -123,6 +123,7 @@ struct CreateTransactionStepOneView: View {
 struct SubCategoryRow:View{
     @EnvironmentObject var appSharedState : AppSharedState
     var subcategory:SubCategory!
+    
     var body: some View {
         VStack(alignment:.leading){
             HStack{
@@ -149,5 +150,3 @@ struct SubCategoryRow:View{
 #Preview {
     CreateTransactionStepOneView().environmentObject(AppSharedState())
 }
-
-

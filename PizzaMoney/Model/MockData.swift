@@ -22,9 +22,9 @@ let startDate = Calendar.current.date(from: DateComponents(year: Calendar.curren
 let endDate = Date()
 
 // Categorie
-let healthCategory = Category(title: "Health", icon: "heart.fill", color: "#E74C3C")
-let shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F39C12")
-let travelCategory = Category(title: "Travel", icon: "airplane.fill", color: "#1ABC9C")
+//let healthCategory = Category(title: "Health", icon: "heart.fill", color: "#E74C3C")
+//let shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F39C12")
+//let travelCategory = Category(title: "Travel", icon: "airplane.fill", color: "#1ABC9C")
 
 // Generate transactions with random dates
 /*let extraTransactions: [Transaction] = (1...60).map { index in

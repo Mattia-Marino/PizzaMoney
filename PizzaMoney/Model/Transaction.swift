@@ -9,7 +9,6 @@ final class Transaction {
     /* SwiftData non gestisce l'ereditarietà.
      * La categoria può essere sia principale che sottocategoria. */
     var subCategory: SubCategory? = nil
-    var category:Category? = nil
     var transactionType: TransactionType
     var amount: Double
     
@@ -17,13 +16,12 @@ final class Transaction {
          date: Date,
          amount: Double,
          transactionType: TransactionType,
-         subCategory: SubCategory? = nil,
-         category: Category? = nil)
+         subCategory: SubCategory? = nil
+         )
         {
         self.title = title
         self.date = date
         self.subCategory = subCategory
-        self.category = category
         self.transactionType = transactionType
         self.amount = amount
     }

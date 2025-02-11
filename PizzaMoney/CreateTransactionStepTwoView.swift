@@ -48,16 +48,17 @@ struct CreateTransactionStepTwoView: View {
                 HStack{
                     
                     TextField("", value: $appSharedState.amount, format: .currency(code: "EUR"))
+                        .padding([.top],200)
                         .multilineTextAlignment(.center)
                         .textFieldStyle(.plain)
                         .font(.custom("AvenirNext-Medium", size: 55))
                         .padding()
                         .keyboardType(.decimalPad)
+
                     
-                }.frame(height: 300)
+                }.frame(height: 200)
                 
                 Spacer()
-                
                 
                 DatePicker(
                     selection: $appSharedState.data,
@@ -94,8 +95,7 @@ struct CreateTransactionStepTwoView: View {
                                     date: appSharedState.data,
                                     amount: appSharedState.amount,
                                     transactionType: appSharedState.type,
-                                    subCategory: appSharedState.selectedSubCategory,
-                                    category: appSharedState.selectedCategory
+                                    subCategory: appSharedState.selectedSubCategory
                                 )
                                 modelContext.insert(newTransaction)
                                 
