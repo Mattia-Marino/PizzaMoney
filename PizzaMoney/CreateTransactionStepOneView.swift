@@ -5,55 +5,60 @@
 //  Created by san017 on 09/02/25.
 //
 
-import SwiftUI
 
+/**
+    Inserire che se viene cliccata l'intestazione deve essere utilizzata la categoria other
+ */
+
+import SwiftUI
+import SwiftData
 struct CreateTransactionStepOneView: View {
     @EnvironmentObject var appSharedState : AppSharedState
-    
+    @Environment(\.modelContext) var viewContext
     let categories = [
         Category(
             title: "Food",
-            icon: "fork.knife",  // SF Symbol for a fork and knife
-            color: "#FF6347",  // Tomato red
+            icon: "fork.knife",
+            color: "#FF6347",
             subCategories: [
-                Category(title: "Fruits", icon: "applelogo", color: "#000000"),  // SF Symbol for an apple logo
-                Category(title: "Vegetables", icon: "leaf", color: "#000000"),  // SF Symbol for a leaf
-                Category(title: "Meat", icon: "bone", color: "#000000")  // SF Symbol for a bone (meat)
+                SubCategory(title: "Fruits"),
+                SubCategory(title: "Vegetables"),
+                SubCategory(title: "Meat")
             ]
         ),
         Category(
             title: "Technology",
-            icon: "desktopcomputer",  // SF Symbol for a desktop computer
-            color: "#1E90FF",  // Dodger blue
+            icon: "desktopcomputer",
+            color: "#1E90FF",
             subCategories: [
-                Category(title: "Smartphones", icon: "iphone", color: "#000000"),  // SF Symbol for an iPhone
-                Category(title: "Laptops", icon: "laptopcomputer", color: "#000000"),  // SF Symbol for a laptop
-                Category(title: "Wearables", icon: "watch", color: "#000000")  // SF Symbol for a watch
+                SubCategory(title: "Smartphones"),
+                SubCategory(title: "Laptops"),
+                SubCategory(title: "Wearables")
             ]
         ),
         Category(
             title: "Entertainment",
-            icon: "film",  // SF Symbol for a film reel
-            color: "#FF69B4",  // Hot pink
+            icon: "film",
+            color: "#FF69B4",
             subCategories: [
-                Category(title: "Movies", icon: "play.rectangle", color: "#000000"),  // SF Symbol for a play button (rectangle)
-                Category(title: "Music", icon: "music.note", color: "#000000"),  // SF Symbol for a music note
-                Category(title: "Video Games", icon: "gamecontroller", color: "#000000")  // SF Symbol for a game controller
+                SubCategory(title: "Movies"),
+                SubCategory(title: "Music"),
+                SubCategory(title: "Video Games")
             ]
         ),
         Category(
             title: "Travel",
-            icon: "airplane",  // SF Symbol for an airplane
-            color: "#32CD32",  // Lime green
+            icon: "airplane",
+            color: "#32CD32",
             subCategories: [
-                Category(title: "Destinations", icon: "location", color: "#000000"),  // SF Symbol for a location pin
-                Category(title: "Transportation", icon: "car", color: "#000000"),  // SF Symbol for a car
-                Category(title: "Accommodation", icon: "house", color: "#000000")  // SF Symbol for a house
+                SubCategory(title: "Destinations"),
+                SubCategory(title: "Transportation"),
+                SubCategory(title: "Accommodation")
             ]
         )
     ]
     
-    
+  
     @State private var selectedCategory: String = "Subscription"
     @State private var searchText: String = ""
     
@@ -101,28 +106,8 @@ struct CreateTransactionStepOneView: View {
                             
                             Divider()
                             VStack(alignment: .leading){
-                                
                                 ForEach(searchSubCat(categories: category.subCategories ?? []), id:\.self) { subcategory in
-                                    
-                                    VStack(alignment:.leading){
-                                        HStack{
-                                            Text(subcategory.title).foregroundStyle(Color(hex: subcategory.color))
-                                            Spacer()
-                                            
-                                                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
-                                                    Image(systemName: "checkmark").foregroundStyle(.blue)
-                                                }
-                                            
-                                        }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
-                                            .onTapGesture {
-                                                
-                                                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
-                                                    return appSharedState.selectedSubCategory = nil
-                                                }
-                                               appSharedState.selectedSubCategory = subcategory
-                                            }
-                                        Divider()
-                                    }.frame(maxWidth: .infinity, alignment: .leading).padding([.horizontal],30)
+                                    SubCategoryRow(subcategory:subcategory)
                                 }
                             }
                         }
@@ -145,13 +130,14 @@ struct CreateTransactionStepOneView: View {
         if searchText.isEmpty{
             return categories
         }else{
-            
+            print(searchText)
             return categories.filter {
+            
                 filtSubCat(cats: $0.subCategories ?? [])
             }
         }
     }
-    func filtSubCat(cats: Array<Category>) -> Bool {
+    func filtSubCat(cats: Array<SubCategory>) -> Bool {
         if searchText.isEmpty {
             return true
         }
@@ -159,7 +145,7 @@ struct CreateTransactionStepOneView: View {
         }.count > 0
     }
     
-    func searchSubCat(categories: Array<Category>) -> Array<Category> {
+    func searchSubCat(categories: Array<SubCategory>) -> Array<SubCategory> {
         if searchText.isEmpty {
             //self.catWithSub = categories
             return categories
@@ -175,8 +161,33 @@ struct CreateTransactionStepOneView: View {
         }
         return subCats
     }
-    
-    
+}
+
+
+struct SubCategoryRow:View{
+    @EnvironmentObject var appSharedState : AppSharedState
+    var subcategory:SubCategory!
+    var body: some View {
+        VStack(alignment:.leading){
+            HStack{
+                Text(subcategory.title)
+                Spacer()
+                
+                    if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                        Image(systemName: "checkmark").foregroundStyle(.blue)
+                    }
+                
+            }.contentShape(Rectangle()).frame(maxWidth:.infinity,alignment: .leading )
+                .onTapGesture {
+                    
+                if appSharedState.selectedSubCategory != nil && appSharedState.selectedSubCategory!.title == subcategory.title{
+                        return appSharedState.selectedSubCategory = nil
+                    }
+                   appSharedState.selectedSubCategory = subcategory
+                }
+            Divider()
+        }.frame(maxWidth: .infinity, alignment: .leading).padding([.horizontal],30)
+    }
 }
 
 #Preview {

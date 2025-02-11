@@ -6,7 +6,7 @@ class AppSharedState: ObservableObject {
     @Published var title : String = ""
     @Published var data : Date = Date.now
     @Published var amount = 0.0
-    @Published var selectedSubCategory: Category? = nil
+    @Published var selectedSubCategory: SubCategory? = nil
     @Published var type: TransactionType = TransactionType.expense
 }
 
@@ -28,8 +28,9 @@ struct PizzaMoneyApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    
+        
 
+    
     @StateObject var appSharedState : AppSharedState = AppSharedState()
     var body: some Scene {
         WindowGroup {

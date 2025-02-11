@@ -27,7 +27,7 @@ let shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F3
 let travelCategory = Category(title: "Travel", icon: "airplane.fill", color: "#1ABC9C")
 
 // Generate transactions with random dates
-let extraTransactions: [Transaction] = (1...60).map { index in
+/*let extraTransactions: [Transaction] = (1...60).map { index in
     let category = [healthCategory, shoppingCategory, travelCategory].randomElement()
     let transactionType: TransactionType = Bool.random() ? .income : .expense
     let amount = Double.random(in: 10.0...1500.0)
@@ -40,9 +40,9 @@ let extraTransactions: [Transaction] = (1...60).map { index in
         transactionType: transactionType,
         category: category
     )
-}
+}*/
 
-func createMockWallets() -> [Wallet] {
+/*func createMockWallets() -> [Wallet] {
     let mainWallet = Wallet(name: "Contesa San Francesco", initialAmount: 1000.00)
     mainWallet.transactions.append(contentsOf: extraTransactions.prefix(20))
 
@@ -53,4 +53,4 @@ func createMockWallets() -> [Wallet] {
     savingsWallet.transactions.append(contentsOf: extraTransactions[40..<60])
 
     return [mainWallet, vacationWallet, savingsWallet]
-}
+}*/
