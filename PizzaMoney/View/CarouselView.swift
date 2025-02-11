@@ -9,10 +9,8 @@ import SwiftUI
 
 struct CarouselView: View {
     
-    var banks : [String]
-    @Binding var selected : String
-    
-    //TODO: da cambiare quando lo schema dati sarà completato
+    var wallets : [Wallet]
+    @Binding var selected : Wallet?
     
     let selectedColor = Color.blue
     let unselectedColor = Color.gray
@@ -20,35 +18,36 @@ struct CarouselView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(banks, id: \.self) { bank in
-                    
-                    let color = if selected == bank {
-                        selectedColor
-                    } else {
-                        unselectedColor
-                    }
-                                        
+                ForEach(wallets) { wallet in
                     Button(action: {
-                        selected = bank
+                        selected = wallet
                     }) {
-                        Text(bank)
+                        Text(wallet.name)
                             .padding()
                             .background(
-                                RoundedRectangle(cornerRadius: 50, style: .continuous).fill(color)
+                                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                                    .fill(selected?.id == wallet.id ? selectedColor : unselectedColor)
                             )
                             .foregroundStyle(.white)
                             .font(.headline)
-                    }
+                    }.padding(.leading, wallets.first == wallet ? 60 : 0)
+                        .padding(.trailing, wallets.last == wallet ? 60 : 0)
                     
                 }
             }
             
         }.scrollIndicators(.hidden)
+        
+            .onAppear {
+                selected = wallets.first
+            }
     }
 }
 
+
 #Preview {
-    @Previewable var banks = ["Contesa San Paolo", "Banca Inulia", "BananaRepublic"]
-    @Previewable @State var selected = "Contesa San Paolo"
-    return CarouselView(banks: banks, selected: $selected)
+    @Previewable var wallets = createMockWallets()
+    @Previewable @State var selected : Wallet? = nil
+    CarouselView(wallets: wallets, selected: $selected)
 }
+
