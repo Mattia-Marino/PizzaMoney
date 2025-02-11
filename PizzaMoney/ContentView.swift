@@ -38,10 +38,10 @@ struct ContentView: View {
                 TotalsView()
             }
             Tab("Accounts", systemImage: "wallet.bifold"){
-                TransactionsListView()
+                
             }
             Tab("Transactions", systemImage: "list.bullet"){
-                
+                TransactionsListView()
             }
             Tab("Settings", systemImage: "gearshape"){
                 
