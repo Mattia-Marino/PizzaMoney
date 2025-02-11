@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("theme") private var theme = ThemeSetting.system
+    
+    @State private var selectedValue: Int? = 0
+    
     var body: some View {
         NavigationStack{
             
@@ -26,12 +30,14 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    Picker(selection: .constant(1), label: Text("Picker")
+                    Picker(selection: $selectedValue, label: Text("Picker")
                         
                         )
                     {
-                        Text("System").tag(1)
-                        /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        
+                        ForEach(ThemeSetting.allCases, id: \.rawValue) { setting in
+                            Text(setting.name).tag(setting.rawValue)
+                        }
                         
                         
                     }.padding(.trailing, 10.0)
@@ -63,7 +69,7 @@ struct SettingsView: View {
                                     Image(systemName: "pencil")
                                     .foregroundStyle(.blue)
                                     .font(.title)              .padding(.top, 10.0)      }
-                                .padding(.leading, 175.0)
+                                .padding(.leading, 125.0)
 
                         Spacer()
                             
