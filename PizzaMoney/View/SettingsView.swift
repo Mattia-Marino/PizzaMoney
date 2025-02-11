@@ -22,11 +22,12 @@ struct SettingsView: View {
                 HStack{
                     Text("Theme")
                         .font(.system(size: 20, weight: .regular))
-                        .padding(.leading, 10.0)
+                        .padding(.leading, 30.0)
                     
                     Spacer()
                     
                     Picker(selection: .constant(1), label: Text("Picker")
+                        
                         )
                     {
                         Text("System").tag(1)
@@ -38,9 +39,7 @@ struct SettingsView: View {
                 }
                 
                 Divider()
-                
-                
-                
+                    .frame(width: 350.0)
                 
                 HStack{
                     
@@ -57,34 +56,28 @@ struct SettingsView: View {
                 HStack{
                     Text("Edit categories")
                         .font(.system(size: 20, weight: .regular))
-                        .padding(.leading, 10.0);                Spacer()
-                    Picker(selection: .constant(1), label: Text("Picker"))
-                    {
-                        Text("System2").tag(1)
-                        /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        .padding(.leading, 30.0);                Spacer()
+                    Button(action: {
+                                    
+                                }) {
+                                    Image(systemName: "pencil")
+                                    .foregroundStyle(.blue)
+                                    .font(.title)              .padding(.top, 10.0)      }
+                                .padding(.leading, 175.0)
+
                         Spacer()
                             
                     }
                 }
-                Divider()
-    
-                
-                
+            Divider()
+                .frame(width: 350.0)
                 Spacer()
                 
-                
-                
-                
-                
-                .navigationTitle(Text("Settings"))
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitle("Settings", displayMode:.inline)
             }
-            
         }
-        
     }
     
-}
     
 #Preview {
     SettingsView()
