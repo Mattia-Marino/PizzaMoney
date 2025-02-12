@@ -2,13 +2,13 @@ import Foundation
 import SwiftData
 
 @Model
-final class Transaction {
-    var id = UUID()
+final class Transaction : Identifiable {
+    @Attribute(.unique) var id = UUID()
     var date: Date
     var title: String
     /* SwiftData non gestisce l'ereditarietà.
      * La categoria può essere sia principale che sottocategoria. */
-    var category: Category? = nil
+    var subCategory: SubCategory? = nil
     var transactionType: TransactionType
     var amount: Double
     
@@ -16,10 +16,12 @@ final class Transaction {
          date: Date,
          amount: Double,
          transactionType: TransactionType,
-         category: Category? = nil) {
+         subCategory: SubCategory? = nil
+         )
+        {
         self.title = title
         self.date = date
-        self.category = category
+        self.subCategory = subCategory
         self.transactionType = transactionType
         self.amount = amount
     }
