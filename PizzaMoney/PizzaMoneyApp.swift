@@ -40,6 +40,7 @@ struct PizzaMoneyApp: App {
         WindowGroup {
             ContentView()
                 .applyTheme(theme)
+
         }
         .modelContainer(sharedModelContainer)
         .environmentObject(appSharedState)
