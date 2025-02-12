@@ -131,7 +131,7 @@ struct EditCategoriesView: View {
                     }
                 }.searchable(text: $searchText) .toolbar {
                     ToolbarItem() {
-                        NavigationLink(destination: EmptyView()) {
+                        NavigationLink(destination: EditCategory_Item()) {
                             Image(systemName: "plus.circle.fill")
                         }
                     }
