@@ -48,7 +48,7 @@ struct CarouselView: View {
 
 
 #Preview {
-    @Previewable var wallets = createMockWallets()
+    @Previewable var wallets = createMock().wallets
     @Previewable @State var selected : Wallet? = nil
     CarouselView(wallets: wallets, selected: $selected)
 }

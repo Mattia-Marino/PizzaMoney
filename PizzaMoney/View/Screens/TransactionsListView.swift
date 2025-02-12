@@ -115,11 +115,19 @@ struct TransactionsListView: View {
             .toolbar {
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination:CreateTransactionStepOneView()){
 
+                    
+                    Button(action: {
+                        // Action for editing categories
+                    }) {
+                        NavigationLink(destination: CreateTransactionStepOneView()){
                             Image(systemName: "plus")
+                        }
                         
                     }
+                    
+                    
+                    
                 }
                 
             }

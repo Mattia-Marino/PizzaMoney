@@ -77,12 +77,20 @@ let previewContainer: ModelContainer = {
             
             let context = container.mainContext
             
-            let wallets = createMockWallets()
+            let categories = createMock().categories
+            
+            for category in categories {
+                context.insert(category)
+            }
+            
+            let wallets = createMock().wallets
             
             for wallet in wallets {
                 print(wallet.name)
                 context.insert(wallet)
             }
+            
+            
             
         }
         

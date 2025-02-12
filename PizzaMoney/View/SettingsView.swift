@@ -56,10 +56,13 @@ struct SettingsView: View {
                     Button(action: {
                         // Action for editing categories
                     }) {
-                        Image(systemName: "pencil")
-                            .foregroundStyle(.blue)
-                            .font(.title)
-                            .padding(.top, 10)
+                        NavigationLink(destination: EditCategoriesView()){
+                            Image(systemName: "pencil")
+                                .foregroundStyle(.blue)
+                                .font(.title)
+                                .padding(.top, 10)
+                        }
+                        
                     }
                     .padding(.leading, 125)
                     
