@@ -15,7 +15,9 @@ class AppSharedState: ObservableObject {
 
 @main
 struct PizzaMoneyApp: App {
-
+    
+    @AppStorage("theme") private var theme = ThemeSetting.system
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Transaction.self,
@@ -37,6 +39,7 @@ struct PizzaMoneyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .applyTheme(theme)
         }
         .modelContainer(sharedModelContainer)
         .environmentObject(appSharedState)
