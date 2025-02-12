@@ -43,7 +43,7 @@ struct CreateTransactionStepTwoView: View {
         NavigationStack{
             VStack{
                 
-                CarouselView(banks: banks, selected: $appSharedState.bank)
+                CarouselView(wallets: appSharedState.wallets, selected: $appSharedState.selectedWallet)
                 
                 HStack{
                     
