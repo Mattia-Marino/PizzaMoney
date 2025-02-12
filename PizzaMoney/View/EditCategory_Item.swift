@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import SFSymbolsPicker
 
 struct EditCategory_Item: View {
-@State private var Userimput: String = ""
-@State private var selectedIcon: String = ""
+    @State private var Userimput: String = ""
+    @State private var selectedIcon: String = "ellipsis"
+    
+    @State private var icon = "star.fill"
+    @State private var isPresented = false
+    @State private var color = Color.blue
+    
     var body: some View {
         VStack{
             Text("Name")
@@ -20,21 +26,37 @@ struct EditCategory_Item: View {
             
             VStack{
                 
-                ColorPicker("Color", selection: .constant(.blue))
+                ColorPicker("Color", selection: $color)
                     .font(.headline)
                     .padding()
                 
+
                 VStack{
-                    Text("Icon")
-                        .font(.headline)
-                    
-                    let Icons = [ "moon", "sun", "moon.stars", "sun.max", "moon.min", "sun.min", "moon.stars.fill", "sun.fill" ]
-                    
-                    Image(systemName: selectedIcon)
-                        .font(.system(size: 32))
-                        .padding()
                     
                     HStack{
+                        Text("Icon")
+                            .font(.headline)
+                            .padding(.leading, 10)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isPresented.toggle()
+                        }) {
+                            Image(systemName: selectedIcon) // SF Symbol
+                                .font(.system(size: 24)) // Adjust size
+                                .foregroundColor(color) // TODO: cambia colore con quello selezionato
+                        }
+                        .padding(.trailing, 16)
+                        .sheet(isPresented: $isPresented, content: {
+                            SymbolsPicker(selection: $selectedIcon, title: "Pick a symbol", autoDismiss: true)
+                        })
+
+                    }
+                    
+                    
+                    
+                    /*HStack{
                         ForEach(Icons, id: \.self){ icon in
                             Button(action: {
                                 selectedIcon = icon
@@ -49,7 +71,7 @@ struct EditCategory_Item: View {
                             }
                                 
                         }
-                    }
+                    }*/
                         
                         
                 }
