@@ -41,6 +41,7 @@ struct ContentView: View {
                 AccountsWalletView()
             }
             Tab("Transactions", systemImage: "list.bullet"){
+
                 TransactionsListView()
             }
             Tab("Settings", systemImage: "gearshape"){
