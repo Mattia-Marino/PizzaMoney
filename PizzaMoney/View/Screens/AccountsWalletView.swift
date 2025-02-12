@@ -10,6 +10,7 @@ import _SwiftData_SwiftUI
 
 
 struct AccountsWalletView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: [SortDescriptor(\Wallet.name)]) var wallets: [Wallet]
     
     private var totalValue: Double {
@@ -71,11 +72,14 @@ struct AccountsWalletView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 
-                VStack(spacing: 8) {
-                    WalletCard(name: "Contesa San Francesco", amount: "€20.000,00")
-                    WalletCard(name: "Banca Inulia", amount: "€12.524,98")
+                List {
+                    ForEach(wallets) { wallet in
+                        WalletCard(name: wallet.name, amount: "€\(String(format: "%.2f", wallet.totalAmount))")
+                    }
+                    .onDelete(perform: deleteWallet)
                 }
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .scrollContentBackground(.hidden)
 
                 Spacer()
             }
@@ -87,6 +91,13 @@ struct AccountsWalletView: View {
         }
 
         
+    }
+
+    func deleteWallet(at offsets: IndexSet) {
+        for index in offsets {
+            let wallet = wallets[index]
+            modelContext.delete(wallet) // Deletes the wallet from SwiftData
+        }
     }
 
     func cardColor(for value: Double) -> UIColor {
@@ -107,6 +118,7 @@ struct WalletCard: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Color(.systemGray6)
+            // Color(Color.clear)
                 .cornerRadius(12)
                 .shadow(radius: 5)
             
