@@ -21,6 +21,8 @@ struct AccountsWalletView: View {
         return total
     }
     
+    @State private var shouldPresentAddWalletView: Bool = false
+    
     @State private var isValueVisible: Bool = true
 
     var body: some View {
@@ -84,10 +86,13 @@ struct AccountsWalletView: View {
                 Spacer()
             }
             .navigationBarTitle("Accounts", displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {}) {
+            .navigationBarItems(trailing: Button(action: {
+                self.shouldPresentAddWalletView = true
+            }) {
                 Image(systemName: "plus.circle.fill")
                     .foregroundColor(.blue)
             })
+            .sheet(isPresented: self.$shouldPresentAddWalletView, content: { AddWalletView()})
         }
 
         
