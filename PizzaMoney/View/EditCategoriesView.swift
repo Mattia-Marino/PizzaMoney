@@ -23,56 +23,54 @@ struct EditCategoriesView: View {
     @State private var filteredCategories: [Category] = []
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                ForEach(filteredCategories) { category in
-                    VStack {
-                        HStack {
-                            Image(systemName: category.icon ?? "")
-                                .foregroundStyle(Color(hex: category.color))
-                            Text(category.title)
-                                .foregroundStyle(Color(hex: category.color))
+        ScrollView {
+            ForEach(filteredCategories) { category in
+                VStack {
+                    HStack {
+                        Image(systemName: category.icon ?? "")
+                            .foregroundStyle(Color(hex: category.color))
+                        Text(category.title)
+                            .foregroundStyle(Color(hex: category.color))
 
-                            Spacer()
-                            Button("Edit") {
-                                // Edit action here
-                            }
-                            .foregroundStyle(.gray)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
+                        Spacer()
+                        Button("Edit") {
+                            // Edit action here
                         }
-                        Divider()
-
-                        VStack(alignment: .leading) {
-                            ForEach(searchSubCat(subcategories: category.subCategories ?? []), id: \.self) { subcategory in
-                                Text(subcategory.title)
-                                Divider()
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .padding(.horizontal, 20)
+                        .foregroundStyle(.gray)
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.gray)
                     }
+                    Divider()
+
+                    VStack(alignment: .leading) {
+                        ForEach(searchSubCat(subcategories: category.subCategories ?? []), id: \.self) { subcategory in
+                            Text(subcategory.title)
+                            Divider()
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
+                    .padding(.horizontal, 20)
+                }
+                .padding()
+            }
+        }
+        .searchable(text: $searchText)
+        .toolbar {
+            ToolbarItem {
+                NavigationLink(destination: EditCategory_Item()) {
+                    Image(systemName: "plus.circle.fill")
                 }
             }
-            .searchable(text: $searchText)
-            .toolbar {
-                ToolbarItem {
-                    NavigationLink(destination: EditCategory_Item()) {
-                        Image(systemName: "plus.circle.fill")
-                    }
-                }
-            }
-            .navigationTitle("Edit transaction")
-            .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: searchText) { _ in
+        }
+        .navigationTitle("Edit transaction")
+        .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: searchText) { _ in
+            updateFilteredResults()
+        }
+        .onAppear {
+            DispatchQueue.main.async {
                 updateFilteredResults()
-            }
-            .onAppear {
-                DispatchQueue.main.async {
-                    updateFilteredResults()
-                }
             }
         }
     }
@@ -105,11 +103,6 @@ struct EditCategoriesView: View {
         }
     }
 }
-
-
-
-
-
 
 #Preview {
     EditCategoriesView()
