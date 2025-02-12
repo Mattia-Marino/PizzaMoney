@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ThemeSetting: Int {
     case light
@@ -24,6 +25,17 @@ enum ThemeSetting: Int {
             return "Dark"
         case .system:
             return "System"
+        }
+    }
+    
+    var setting: ColorScheme? {
+        switch self {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return nil
         }
     }
 }
