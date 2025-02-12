@@ -60,7 +60,7 @@ class Wallet : Identifiable {
             // Check if transaction falls within the date range
             if transaction.date >= startDate && transaction.date <= endDate {
 
-                guard let category = transaction.subCategory?.category.title else { continue }
+                guard let category = transaction.subCategory?.category else { continue }
 
                 let currentTotal = categoryTotals[category] ?? 0.0
                 
