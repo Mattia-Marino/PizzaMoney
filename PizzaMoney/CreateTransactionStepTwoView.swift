@@ -72,56 +72,33 @@ struct CreateTransactionStepTwoView: View {
                     .labelsHidden()
                 
                 Spacer()
-                //buttons
-                HStack{
-                    Button(action:{
-                        
-                        //return to transactions page
-                        
-                        dismiss()
-                    }){
-                        Label("Cancel", systemImage: "arrow.up.circle")
-                    }
-                    .padding(10)
-                    .padding([.horizontal],30)
-                    .background(Color.red)
-                    .foregroundStyle(.white)
-                    .clipShape(Capsule())
-                    
-                        NavigationLink(destination: EmptyView()){
-                            Button(action:{
-                                let newTransaction = Transaction(
-                                    title: appSharedState.title,
-                                    date: appSharedState.data,
-                                    amount: appSharedState.amount,
-                                    transactionType: appSharedState.type,
-                                    subCategory: appSharedState.selectedSubCategory
-                                )
-                                modelContext.insert(newTransaction)
-                                
-                                //reset appSharedState after insert
-                                appSharedState.bank = "Contesa San Paolo"
-                                appSharedState.title = ""
-                                appSharedState.data = Date.now
-                                appSharedState.amount = 0.0
-                                appSharedState.selectedSubCategory = nil
-                                appSharedState.type = TransactionType.expense
-                                
-                                
-                            }){
-                                
-                                Label("Save", systemImage: "arrow.up.circle")
-                                    .padding(10)
-                                    .padding([.horizontal],30)
-                                    .background(Color.blue)
-                                    .foregroundStyle(.white)
-                                    .clipShape(Capsule())
-                            }
-                        }
-                }
-                
             }.padding().toolbar {
-                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: EmptyView()){
+                        Button(action:{
+                            let newTransaction = Transaction(
+                                title: appSharedState.title,
+                                date: appSharedState.data,
+                                amount: appSharedState.amount,
+                                transactionType: appSharedState.type,
+                                subCategory: appSharedState.selectedSubCategory
+                            )
+                            modelContext.insert(newTransaction)
+                            
+                            //reset appSharedState after insert
+                            appSharedState.bank = "Contesa San Paolo"
+                            appSharedState.title = ""
+                            appSharedState.data = Date.now
+                            appSharedState.amount = 0.0
+                            appSharedState.selectedSubCategory = nil
+                            appSharedState.type = TransactionType.expense
+                            
+                            
+                        }){
+                            Text("Save")
+                        }
+                    }
+                }
             }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
         }
     }
