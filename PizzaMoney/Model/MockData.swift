@@ -45,90 +45,89 @@ let endDate = Date()
 
 
 
-
 func createMockWallets() -> [Wallet] {
     
     // Categories
-    var healthCategory = Category(title: "Health", icon: "heart.fill", color: "#E74C3C", subCategories:[])
-    var shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F39C12", subCategories:[])
-    var travelCategory = Category(title: "Travel", icon: "airplane.fill", color: "#1ABC9C", subCategories:[])
-    var foodCategory = Category(title: "Food", icon: "cart.fill", color: "#FF5733", subCategories:[])
-    var entertainmentCategory = Category(title: "Entertainment", icon: "gamecontroller.fill", color: "#9B59B6", subCategories:[])
-    var educationCategory = Category(title: "Education", icon: "book.fill", color: "#2980B9", subCategories:[])
-    var utilitiesCategory = Category(title: "Utilities", icon: "bolt.fill", color: "#F1C40F", subCategories:[])
-    var rentCategory = Category(title: "Rent", icon: "house.fill", color: "#8E44AD", subCategories:[])
-    var investmentCategory = Category(title: "Investment", icon: "chart.line.uptrend.xyaxis", color: "#27AE60", subCategories:[])
+    let healthCategory = Category(title: "Health", icon: "heart.fill", color: "#E74C3C", subCategories:[])
+    let shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F39C12", subCategories:[])
+    let travelCategory = Category(title: "Travel", icon: "airplane.fill", color: "#1ABC9C", subCategories:[])
+    let foodCategory = Category(title: "Food", icon: "cart.fill", color: "#FF5733", subCategories:[])
+    let entertainmentCategory = Category(title: "Entertainment", icon: "gamecontroller.fill", color: "#9B59B6", subCategories:[])
+    let educationCategory = Category(title: "Education", icon: "book.fill", color: "#2980B9", subCategories:[])
+    let utilitiesCategory = Category(title: "Utilities", icon: "bolt.fill", color: "#F1C40F", subCategories:[])
+    let rentCategory = Category(title: "Rent", icon: "house.fill", color: "#8E44AD", subCategories:[])
+    let investmentCategory = Category(title: "Investment", icon: "chart.line.uptrend.xyaxis", color: "#27AE60", subCategories:[])
 
     //subcategories
 
     // Health Category
-    var subCategory1_1 = SubCategory(title: "Doctor Visits", category: healthCategory)
-    var subCategory1_2 = SubCategory(title: "Medications", category: healthCategory)
-    var subCategory1_3 = SubCategory(title: "Health Insurance", category: healthCategory)
-    var subCategory1_4 = SubCategory(title: "other", category: healthCategory)
+    let subCategory1_1 = SubCategory(title: "Doctor Visits", category: healthCategory)
+    let subCategory1_2 = SubCategory(title: "Medications", category: healthCategory)
+    let subCategory1_3 = SubCategory(title: "Health Insurance", category: healthCategory)
+    let subCategory1_4 = SubCategory(title: "other", category: healthCategory)
     healthCategory.subCategories.append(contentsOf: [subCategory1_4,subCategory1_1, subCategory1_2, subCategory1_3,subCategory1_4])
 
     // Shopping Category
-    var subCategory2_1 = SubCategory(title: "Clothing", category: shoppingCategory)
-    var subCategory2_2 = SubCategory(title: "Electronics", category: shoppingCategory)
-    var subCategory2_3 = SubCategory(title: "Groceries", category: shoppingCategory)
-    var subCategory2_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory2_1 = SubCategory(title: "Clothing", category: shoppingCategory)
+    let subCategory2_2 = SubCategory(title: "Electronics", category: shoppingCategory)
+    let subCategory2_3 = SubCategory(title: "Groceries", category: shoppingCategory)
+    let subCategory2_4 = SubCategory(title: "other", category: shoppingCategory)
     
     shoppingCategory.subCategories.append(contentsOf: [subCategory2_4,subCategory2_1, subCategory2_2, subCategory2_3])
 
     // Travel Category
-    var subCategory3_1 = SubCategory(title: "Destinations", category: travelCategory)
-    var subCategory3_2 = SubCategory(title: "Transportation", category: travelCategory)
-    var subCategory3_3 = SubCategory(title: "Accommodation", category: travelCategory)
-    var subCategory3_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory3_1 = SubCategory(title: "Destinations", category: travelCategory)
+    let subCategory3_2 = SubCategory(title: "Transportation", category: travelCategory)
+    let subCategory3_3 = SubCategory(title: "Accommodation", category: travelCategory)
+    let subCategory3_4 = SubCategory(title: "other", category: shoppingCategory)
     
     travelCategory.subCategories.append(contentsOf: [subCategory3_4,subCategory3_1, subCategory3_2, subCategory3_3])
 
     // Food Category
-    var subCategory4_1 = SubCategory(title: "Restaurants", category: foodCategory)
-    var subCategory4_2 = SubCategory(title: "Groceries", category: foodCategory)
-    var subCategory4_3 = SubCategory(title: "Takeout", category: foodCategory)
-    var subCategory4_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory4_1 = SubCategory(title: "Restaurants", category: foodCategory)
+    let subCategory4_2 = SubCategory(title: "Groceries", category: foodCategory)
+    let subCategory4_3 = SubCategory(title: "Takeout", category: foodCategory)
+    let subCategory4_4 = SubCategory(title: "other", category: shoppingCategory)
     
     foodCategory.subCategories.append(contentsOf: [subCategory4_4,subCategory4_1, subCategory4_2, subCategory4_3])
 
     // Entertainment Category
-    var subCategory5_1 = SubCategory(title: "Movies", category: entertainmentCategory)
-    var subCategory5_2 = SubCategory(title: "Games", category: entertainmentCategory)
-    var subCategory5_3 = SubCategory(title: "Music", category: entertainmentCategory)
-    var subCategory5_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory5_1 = SubCategory(title: "Movies", category: entertainmentCategory)
+    let subCategory5_2 = SubCategory(title: "Games", category: entertainmentCategory)
+    let subCategory5_3 = SubCategory(title: "Music", category: entertainmentCategory)
+    let subCategory5_4 = SubCategory(title: "other", category: shoppingCategory)
     
     entertainmentCategory.subCategories.append(contentsOf: [subCategory5_4,subCategory5_1, subCategory5_2, subCategory5_3])
 
     // Education Category
-    var subCategory6_1 = SubCategory(title: "Books", category: educationCategory)
-    var subCategory6_2 = SubCategory(title: "Online Courses", category: educationCategory)
-    var subCategory6_3 = SubCategory(title: "School Fees", category: educationCategory)
-    var subCategory6_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory6_1 = SubCategory(title: "Books", category: educationCategory)
+    let subCategory6_2 = SubCategory(title: "Online Courses", category: educationCategory)
+    let subCategory6_3 = SubCategory(title: "School Fees", category: educationCategory)
+    let subCategory6_4 = SubCategory(title: "other", category: shoppingCategory)
     
     educationCategory.subCategories.append(contentsOf: [subCategory6_4,subCategory6_1, subCategory6_2, subCategory6_3])
 
     // Utilities Category
-    var subCategory7_1 = SubCategory(title: "Electricity", category: utilitiesCategory)
-    var subCategory7_2 = SubCategory(title: "Water", category: utilitiesCategory)
-    var subCategory7_3 = SubCategory(title: "Internet", category: utilitiesCategory)
-    var subCategory7_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory7_1 = SubCategory(title: "Electricity", category: utilitiesCategory)
+    let subCategory7_2 = SubCategory(title: "Water", category: utilitiesCategory)
+    let subCategory7_3 = SubCategory(title: "Internet", category: utilitiesCategory)
+    let subCategory7_4 = SubCategory(title: "other", category: shoppingCategory)
     
     utilitiesCategory.subCategories.append(contentsOf: [subCategory7_4,subCategory7_1, subCategory7_2, subCategory7_3])
 
     // Rent Category
-    var subCategory8_1 = SubCategory(title: "Monthly Rent", category: rentCategory)
-    var subCategory8_2 = SubCategory(title: "Maintenance", category: rentCategory)
-    var subCategory8_3 = SubCategory(title: "Utilities", category: rentCategory)
-    var subCategory8_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory8_1 = SubCategory(title: "Monthly Rent", category: rentCategory)
+    let subCategory8_2 = SubCategory(title: "Maintenance", category: rentCategory)
+    let subCategory8_3 = SubCategory(title: "Utilities", category: rentCategory)
+    let subCategory8_4 = SubCategory(title: "other", category: shoppingCategory)
     
     rentCategory.subCategories.append(contentsOf: [subCategory8_4,subCategory8_1, subCategory8_2, subCategory8_3])
 
     // Investment Category
-    var subCategory9_1 = SubCategory(title: "Stocks", category: investmentCategory)
-    var subCategory9_2 = SubCategory(title: "Bonds", category: investmentCategory)
-    var subCategory9_3 = SubCategory(title: "Real Estate", category: investmentCategory)
-    var subCategory9_4 = SubCategory(title: "other", category: shoppingCategory)
+    let subCategory9_1 = SubCategory(title: "Stocks", category: investmentCategory)
+    let subCategory9_2 = SubCategory(title: "Bonds", category: investmentCategory)
+    let subCategory9_3 = SubCategory(title: "Real Estate", category: investmentCategory)
+    let subCategory9_4 = SubCategory(title: "other", category: shoppingCategory)
     
     investmentCategory.subCategories.append(contentsOf: [subCategory9_4,subCategory9_1, subCategory9_2, subCategory9_3])
     

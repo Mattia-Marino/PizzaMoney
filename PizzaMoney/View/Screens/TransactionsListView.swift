@@ -115,10 +115,10 @@ struct TransactionsListView: View {
             .toolbar {
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        print("Plus button was tapped")
-                    } label: {
-                        Image(systemName: "plus")
+                    NavigationLink(destination:CreateTransactionStepOneView()){
+
+                            Image(systemName: "plus")
+                        
                     }
                 }
                 
