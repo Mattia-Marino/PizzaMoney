@@ -139,7 +139,7 @@ struct EditCategory_Item: View {
                 Button("Save"){
                     let newCategoria = Category(title: categoryName , color: "", subCategories: [])
                     for item in items{
-                        newCategoria.subCategories?.append(Category(title: item, color: ""))
+                        newCategoria.subCategories.append(SubCategory(title: item, category: newCategoria))
                     }
                     modelContext.insert(newCategoria)
                     do {
