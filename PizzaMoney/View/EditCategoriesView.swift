@@ -7,6 +7,7 @@
 
 import SwiftUI
 import _SwiftData_SwiftUI
+
 struct CategoryStruct: Identifiable {
     var id = UUID()
     var nome: String
@@ -15,7 +16,10 @@ struct CategoryStruct: Identifiable {
 }
 
 struct EditCategoriesView: View {
-    var categories: [Category] = [
+    @Environment(\.modelContext) private var modelContext
+    @Query private var categoriesQuery: [Category]
+    
+    @State var categories: [Category] = [
       
         Category(title: "Health", icon: "heart.fill", color: "#E74C3C",
         subCategories: [
@@ -138,8 +142,14 @@ struct EditCategoriesView: View {
                                 
                 }.navigationTitle("Edit transaction").navigationBarTitleDisplayMode(.inline)
                 
+            }.onAppear {
+                for category in categoriesQuery {
+                    print("TITLE \(category.title)")
+                }
+                categories.append(contentsOf: categoriesQuery)
             }
         }
+    
     /*var searchResults: [Category]{
                 if searchText.isEmpty{
                     return categories

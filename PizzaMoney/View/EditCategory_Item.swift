@@ -9,7 +9,11 @@ import SwiftUI
 import SFSymbolsPicker
 
 struct EditCategory_Item: View {
-    @State private var Userimput: String = ""
+    @Environment(\.modelContext) private var modelContext
+    @State private var newItem: String = ""
+    @State private var items: [String] = []  // Lista per memorizzare gli elementi aggiunti
+    
+    @State private var categoryName: String = ""
     @State private var selectedIcon: String = "ellipsis"
     
     @State private var icon = "star.fill"
@@ -17,72 +21,138 @@ struct EditCategory_Item: View {
     @State private var color = Color.blue
     
     var body: some View {
-        VStack{
-            Text("Name")
-                .font(.headline)
+        NavigationStack {
             
-            TextField("Name of category", text: $Userimput)
-                .padding()
             
             VStack{
+                Divider()
+                HStack{
+                    Text("Name")
+                        .font(.headline)
+                        .padding()
+                    
+                    TextField("Name of category", text: $categoryName)
+                        .padding()
+                    
+                    
+                    
+                }
+                Divider()
                 
-                ColorPicker("Color", selection: $color)
-                    .font(.headline)
-                    .padding()
                 
-
                 VStack{
                     
-                    HStack{
-                        Text("Icon")
-                            .font(.headline)
-                            .padding(.leading, 10)
+                    ColorPicker("Color", selection: $color)
+                        .font(.headline)
+                        .padding()
+                    Divider()
+                    
+                    
+                    
+                    VStack{
                         
-                        Spacer()
-                        
-                        Button(action: {
-                            isPresented.toggle()
-                        }) {
-                            Image(systemName: selectedIcon) // SF Symbol
-                                .font(.system(size: 24)) // Adjust size
-                                .foregroundColor(color) // TODO: cambia colore con quello selezionato
+                        HStack{
+                            Text("Icon")
+                                .font(.headline)
+                                .padding()
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                isPresented.toggle()
+                            }) {
+                                Image(systemName: selectedIcon) // SF Symbol
+                                    .font(.system(size: 24)) // Adjust size
+                                    .foregroundColor(color) // TODO: cambia colore con quello selezionato
+                            }
+                            .padding(.trailing, 16)
+                            .sheet(isPresented: $isPresented, content: {
+                                SymbolsPicker(selection: $selectedIcon, title: "Pick a symbol", autoDismiss: true)
+                            })
+                            
+                            
                         }
-                        .padding(.trailing, 16)
-                        .sheet(isPresented: $isPresented, content: {
-                            SymbolsPicker(selection: $selectedIcon, title: "Pick a symbol", autoDismiss: true)
-                        })
-
+                        HStack{
+                            Text("SUBCATEGORIES")
+                                .foregroundColor(Color.gray)
+                                .padding(.leading)
+                            Spacer()
+                            
+                            
+                        }
+                        
+                        
+                        
+                        
                     }
                     
-                    
-                    
-                    /*HStack{
-                        ForEach(Icons, id: \.self){ icon in
-                            Button(action: {
-                                selectedIcon = icon
-                            }){
-                                Image(systemName: icon)
-                                    .font(.system(size: 30))
-                                    .padding()
-                                    .foregroundColor(selectedIcon == icon ? .blue : .black)
-                                    .background()
-                                Circle()
-                                    .stroke(selectedIcon == icon ? Color.blue : Color.black, lineWidth: 3)
-                            }
-                                
-                        }
-                    }*/
-                        
-                        
                 }
+                Spacer()
                 
-            }
-            
+                VStack {
+                               // Campo di testo per inserire un nuovo elemento
+                               HStack {
+                                   TextField("", text: $newItem)
+                                       .padding()
+                                       .border(Color.gray, width: 2)
+                                       .cornerRadius(3)
                 
+                                   Button(action: {
+                                       // Aggiungi l'elemento alla lista solo se non è vuoto
+                                       if !newItem.isEmpty {
+                                           items.append(newItem)
+                                           newItem = ""  // Reset del campo di testo dopo aver aggiunto l'elemento
+                                       }
+                                   }) {
+                                       Text("+")
+                                           .frame(width: 5, height: 5)
+                                           .padding()
+                                           .background(Color.blue)
+                                           .foregroundColor(.white)
+                                           .cornerRadius(100)
+                                   }
+                               }
+                               .padding()
+
+                               // Lista di elementi aggiunti dall'utente
+                    List {
+                        ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                            HStack {
+                                Text(item)
+                                Spacer()
+                                Button(action: {
+                                    items.remove(at: index)
+                                    
+                                }) {
+                                    Label("", systemImage: "trash")
+                                }
+                            }
+                        }
+                    }
+                               
+                           }
+                           .padding()
+                
+            }.toolbar{
+                Button("Save"){
+                    let newCategoria = Category(title: categoryName , color: "", subCategories: [])
+                    for item in items{
+                        newCategoria.subCategories?.append(Category(title: item, color: ""))
+                    }
+                    modelContext.insert(newCategoria)
+                    do {
+                        try modelContext.save()
+                    } catch {
+                        print("Errore in salva")
+                    }
+                }
+            }.navigationTitle("Edit Category").navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
+
 #Preview {
     EditCategory_Item()
+    
 }

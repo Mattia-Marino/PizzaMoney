@@ -20,7 +20,7 @@ struct PizzaMoneyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EditCategoriesView()
         }
         .modelContainer(sharedModelContainer)
     }
