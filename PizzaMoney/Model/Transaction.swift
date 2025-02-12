@@ -2,8 +2,8 @@ import Foundation
 import SwiftData
 
 @Model
-final class Transaction {
-    var id = UUID()
+final class Transaction : Identifiable {
+    @Attribute(.unique) var id = UUID()
     var date: Date
     var title: String
     /* SwiftData non gestisce l'ereditarietà.

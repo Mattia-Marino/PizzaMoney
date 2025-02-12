@@ -18,11 +18,11 @@ class Category {
     var color: String = "#000000" //TODO: func to generate random color
     var subCategories: [SubCategory]
         
-    init(id: UUID = UUID(), title: String, icon: String? = nil, color: String, subCategories: [SubCategory]) {
+    init(id: UUID = UUID(), title: String, icon: String? = nil, color: String) {
         self.id = id
         self.title = title
         self.icon = icon
         self.color = color
-        self.subCategories = subCategories
+        self.subCategories = []
     }
 }
