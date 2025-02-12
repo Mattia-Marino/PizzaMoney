@@ -6,9 +6,21 @@
 //
 
 import SwiftUI
+import _SwiftData_SwiftUI
+
 
 struct AccountsWalletView: View {
-    var value: Double
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: [SortDescriptor(\Wallet.name)]) var wallets: [Wallet]
+    
+    private var totalValue: Double {
+        let total = wallets.reduce(0) { result, wallet in
+            return result + wallet.totalAmount
+        }
+        
+        return total
+    }
+    
     @State private var isValueVisible: Bool = true
 
     var body: some View {
@@ -16,7 +28,7 @@ struct AccountsWalletView: View {
             VStack(spacing: 16) {
                 // Total Balance Card
                 ZStack(alignment: .leading) {
-                    Color(cardColor(for: value))
+                    Color(cardColor(for: totalValue))
                         .cornerRadius(20)
                         .shadow(radius: 5)
                     
@@ -41,7 +53,7 @@ struct AccountsWalletView: View {
                         if isValueVisible {
                             HStack {
                                 Spacer()
-                                Text("€\(String(format: "%.2f", value))")
+                                Text("€\(String(format: "%.2f", totalValue))")
                                     .font(.system(size: 45))
                                     .fontWeight(.bold)
                                     .foregroundColor(.black)
@@ -60,11 +72,14 @@ struct AccountsWalletView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 
-                VStack(spacing: 8) {
-                    WalletCard(name: "Contesa San Francesco", amount: "€20.000,00")
-                    WalletCard(name: "Banca Inulia", amount: "€12.524,98")
+                List {
+                    ForEach(wallets) { wallet in
+                        WalletCard(name: wallet.name, amount: "€\(String(format: "%.2f", wallet.totalAmount))")
+                    }
+                    .onDelete(perform: deleteWallet)
                 }
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .scrollContentBackground(.hidden)
 
                 Spacer()
             }
@@ -78,6 +93,13 @@ struct AccountsWalletView: View {
         
     }
 
+    func deleteWallet(at offsets: IndexSet) {
+        for index in offsets {
+            let wallet = wallets[index]
+            modelContext.delete(wallet) // Deletes the wallet from SwiftData
+        }
+    }
+
     func cardColor(for value: Double) -> UIColor {
         switch value {
         case ...0:
@@ -89,32 +111,30 @@ struct AccountsWalletView: View {
 }
 
 struct WalletCard: View {
+    var id: UUID = UUID()
     var name: String
     var amount: String
     
     var body: some View {
-        HStack {
+        ZStack(alignment: .leading) {
+            Color(.systemGray6)
+            // Color(Color.clear)
+                .cornerRadius(12)
+                .shadow(radius: 5)
+            
             VStack(alignment: .leading) {
                 Text(name)
                     .font(.headline)
                 Text("Total: \(amount)")
                     .font(.subheadline)
                     .foregroundColor(.gray)
-            }
-            Spacer()
-            Button(action: {}) {
-                Image(systemName: "trash")
-                    .foregroundColor(.black)
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+            }.padding()
+        }.frame(width: 360, height: 90)
     }
 }
 
 
 #Preview {
-    AccountsWalletView(value: 32524.98)
+    AccountsWalletView()
+        .modelContainer(previewContainer)
 }

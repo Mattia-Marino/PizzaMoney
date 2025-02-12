@@ -13,7 +13,8 @@ import SwiftData
 class SubCategory {
     var id = UUID()
     var title: String
-    let category : Category
+    var category : Category
+
     
     init(id: UUID = UUID(), title: String, category: Category) {
         self.id = id
@@ -21,5 +22,4 @@ class SubCategory {
         self.category = category
     }
 }
-
 

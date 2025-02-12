@@ -22,8 +22,10 @@ struct CarouselView: View {
                     Button(action: {
                         selected = wallet
                     }) {
+
                         Text(wallet.name)
-                            .padding()
+                            .padding(10)
+
                             .background(
                                 RoundedRectangle(cornerRadius: 50, style: .continuous)
                                     .fill(selected?.id == wallet.id ? selectedColor : unselectedColor)

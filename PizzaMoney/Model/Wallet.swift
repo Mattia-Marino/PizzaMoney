@@ -59,7 +59,9 @@ class Wallet : Identifiable {
         for transaction in transactions {
             // Check if transaction falls within the date range
             if transaction.date >= startDate && transaction.date <= endDate {
-                guard let category = transaction.category else { continue }
+
+                guard let category = transaction.subCategory?.category else { continue }
+
                 let currentTotal = categoryTotals[category] ?? 0.0
                 
                 let adjustedAmount = transaction.transactionType == .income ? transaction.amount : -transaction.amount
@@ -72,7 +74,7 @@ class Wallet : Identifiable {
     
     func transactionsForCategory(_ categoryTitle: String, from startDate: Date, to endDate: Date) -> [Transaction] {
         return transactions.filter {
-            $0.category?.title == categoryTitle &&
+            $0.subCategory?.category.title == categoryTitle &&
             $0.date >= startDate &&
             $0.date <= endDate
         }
