@@ -29,7 +29,9 @@ struct TotalsView: View {
             to: endDate
         ) ?? 0
         
-        var transactionsSign = totalTransactions < 0 ? "-" : "+"
+        /* Se l'ammontare è negativo il segno meno viene messo
+         * inj automatico*/
+        var transactionsSign = totalTransactions < 0 ? "" : "+"
         
         var transactionsColor = totalTransactions < 0 ? Color.red : Color.green
         
