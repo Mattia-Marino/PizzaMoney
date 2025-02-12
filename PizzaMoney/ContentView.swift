@@ -38,13 +38,14 @@ struct ContentView: View {
                 TotalsView()
             }
             Tab("Accounts", systemImage: "wallet.bifold"){
-                
+                AccountsWalletView()
             }
             Tab("Transactions", systemImage: "list.bullet"){
-                
+
+                TransactionsListView()
             }
             Tab("Settings", systemImage: "gearshape"){
-                
+                SettingsView()
             }
         }
     }
@@ -66,7 +67,40 @@ struct ContentView: View {
 //    }
 }
 
+
+let previewContainer: ModelContainer = {
+    do {
+        let container = try ModelContainer(for: Wallet.self,
+                                           configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        
+        Task { @MainActor in
+            
+            let context = container.mainContext
+            
+            let categories = createMockCategories()
+            
+            for category in categories {
+                context.insert(category)
+            }
+            
+            let wallets = createMockWallets()
+            
+            for wallet in wallets {
+                print(wallet.name)
+                context.insert(wallet)
+            }
+            
+            
+            
+        }
+        
+        return container
+    } catch {
+        fatalError("Failed to create container: \(error.localizedDescription)")
+    }
+}()
+
 #Preview {
     ContentView()
-        .modelContainer(for: Transaction.self, inMemory: true)
+        .modelContainer(previewContainer)
 }
