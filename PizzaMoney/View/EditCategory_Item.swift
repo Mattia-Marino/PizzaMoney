@@ -105,10 +105,11 @@ struct EditCategory_Item: View {
                                            newItem = ""  // Reset del campo di testo dopo aver aggiunto l'elemento
                                        }
                                    }) {
-                                       Text("+")
-                                           .frame(width: 35, height: 35)
-                                           .foregroundColor(.blue)
-                                           .cornerRadius(100)
+                                     
+                                       Image(systemName: "plus.circle.fill")
+                                           .padding()
+                                     
+                                       
                                    }
                                }
                     Divider()
@@ -124,7 +125,8 @@ struct EditCategory_Item: View {
                                     items.remove(at: index)
                                     
                                 }) {
-                                    Label("", systemImage: "trash")
+                                    Label("", systemImage: "trash" )
+                                
                                 }
                             }
                         }
