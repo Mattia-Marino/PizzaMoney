@@ -115,6 +115,7 @@ struct TransactionsListView: View {
             .toolbar {
                 
                 ToolbarItem(placement: .topBarTrailing) {
+
                     
                     Button(action: {
                         // Action for editing categories

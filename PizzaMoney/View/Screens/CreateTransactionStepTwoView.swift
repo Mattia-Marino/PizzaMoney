@@ -74,7 +74,7 @@ struct CreateTransactionStepTwoView: View {
                 Spacer()
             }.padding().toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: EmptyView()){
+                    NavigationLink(destination: TransactionsListView()){
                         Button(action:{
                             let newTransaction = Transaction(
                                 title: appSharedState.title,
@@ -83,10 +83,11 @@ struct CreateTransactionStepTwoView: View {
                                 transactionType: appSharedState.type,
                                 subCategory: appSharedState.selectedSubCategory
                             )
-                            modelContext.insert(newTransaction)
+                            appSharedState.selectedWallet?.transactions.append(newTransaction)
+                            
+                            modelContext.insert(appSharedState.selectedWallet!)
                             
                             //reset appSharedState after insert
-                            appSharedState.bank = "Contesa San Paolo"
                             appSharedState.title = ""
                             appSharedState.data = Date.now
                             appSharedState.amount = 0.0

@@ -6,9 +6,6 @@
 //
 
 
-/**
- Inserire che se viene cliccata l'intestazione deve essere utilizzata la categoria other
- */
 
 import SwiftUI
 import SwiftData
@@ -62,7 +59,7 @@ struct CreateTransactionStepOneView: View {
                         
                         Divider()
                         VStack(alignment: .leading){
-                            ForEach(searchSubCat(categories: category.subCategories ?? []), id:\.self) { subcategory in
+                            ForEach(searchSubCat(categories: category.subCategories), id:\.self) { subcategory in
                                 SubCategoryRow(subcategory:subcategory)
                             }
                         }
@@ -88,8 +85,7 @@ struct CreateTransactionStepOneView: View {
         }else{
             print(searchText)
             return categories.filter {
-                
-                filtSubCat(cats: $0.subCategories ?? [])
+                filtSubCat(cats: $0.subCategories)
             }
         }
     }
