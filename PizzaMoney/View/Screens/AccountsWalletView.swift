@@ -6,9 +6,20 @@
 //
 
 import SwiftUI
+import _SwiftData_SwiftUI
+
 
 struct AccountsWalletView: View {
-    var value: Double
+    @Query(sort: [SortDescriptor(\Wallet.name)]) var wallets: [Wallet]
+    
+    private var totalValue: Double {
+        let total = wallets.reduce(0) { result, wallet in
+            return result + wallet.totalAmount
+        }
+        
+        return total
+    }
+    
     @State private var isValueVisible: Bool = true
 
     var body: some View {
@@ -16,7 +27,7 @@ struct AccountsWalletView: View {
             VStack(spacing: 16) {
                 // Total Balance Card
                 ZStack(alignment: .leading) {
-                    Color(cardColor(for: value))
+                    Color(cardColor(for: totalValue))
                         .cornerRadius(20)
                         .shadow(radius: 5)
                     
@@ -41,7 +52,7 @@ struct AccountsWalletView: View {
                         if isValueVisible {
                             HStack {
                                 Spacer()
-                                Text("€\(String(format: "%.2f", value))")
+                                Text("€\(String(format: "%.2f", totalValue))")
                                     .font(.system(size: 45))
                                     .fontWeight(.bold)
                                     .foregroundColor(.black)
@@ -89,6 +100,7 @@ struct AccountsWalletView: View {
 }
 
 struct WalletCard: View {
+    var id: UUID = UUID()
     var name: String
     var amount: String
     
@@ -111,5 +123,6 @@ struct WalletCard: View {
 
 
 #Preview {
-    AccountsWalletView(value: 32524.98)
+    AccountsWalletView()
+        .modelContainer(previewContainer)
 }
