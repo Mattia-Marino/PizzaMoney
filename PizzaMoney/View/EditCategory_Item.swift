@@ -72,11 +72,14 @@ struct EditCategory_Item: View {
                             
                             
                         }
+                        
+                        Divider()
                         HStack{
-                            Text("SUBCATEGORIES")
-                                .foregroundColor(Color.gray)
+                            Text("Add subcategories")
+                                .foregroundColor(Color.black)
                                 .padding(.leading)
                             Spacer()
+                            
                             
                             
                         }
@@ -92,11 +95,9 @@ struct EditCategory_Item: View {
                 VStack {
                                // Campo di testo per inserire un nuovo elemento
                                HStack {
-                                   TextField("", text: $newItem)
+                                   TextField("New subcategory", text: $newItem)
                                        .padding()
-                                       .border(Color.gray, width: 2)
-                                       .cornerRadius(3)
-                
+                                       
                                    Button(action: {
                                        // Aggiungi l'elemento alla lista solo se non è vuoto
                                        if !newItem.isEmpty {
@@ -105,13 +106,12 @@ struct EditCategory_Item: View {
                                        }
                                    }) {
                                        Text("+")
-                                           .frame(width: 5, height: 5)
-                                           .padding()
-                                           .background(Color.blue)
-                                           .foregroundColor(.white)
+                                           .frame(width: 35, height: 35)
+                                           .foregroundColor(.blue)
                                            .cornerRadius(100)
                                    }
                                }
+                    Divider()
                                .padding()
 
                                // Lista di elementi aggiunti dall'utente
