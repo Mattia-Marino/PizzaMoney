@@ -8,7 +8,7 @@ class AppSharedState: ObservableObject {
     @Published var amount = 0.0
     @Published var selectedSubCategory: SubCategory? = nil
     @Published var type: TransactionType = TransactionType.expense
-    @Published var wallets :[Wallet] = createMockWallets()
+    @Published var wallets :[Wallet] = createMock().wallets
     @Published var selectedWallet : Wallet? = nil
 }
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE838C572D5C93B30041B639 /* SFSymbolsPicker in Frameworks */ = {isa = PBXBuildFile; productRef = BE838C562D5C93B30041B639 /* SFSymbolsPicker */; };
+		AE7C481F2D5DE4B500A7675C /* SFSymbolsPicker in Frameworks */ = {isa = PBXBuildFile; productRef = AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE838C572D5C93B30041B639 /* SFSymbolsPicker in Frameworks */,
+				AE7C481F2D5DE4B500A7675C /* SFSymbolsPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = PizzaMoney;
 			packageProductDependencies = (
-				BE838C562D5C93B30041B639 /* SFSymbolsPicker */,
+				AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */,
 			);
 			productName = PizzaMoney;
 			productReference = BEEEFC532D50E42800FF1E11 /* PizzaMoney.app */;
@@ -101,7 +101,7 @@
 			mainGroup = BEEEFC4A2D50E42800FF1E11;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				BE838C552D5C93B30041B639 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */,
+				AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BEEEFC542D50E42800FF1E11 /* Products */;
@@ -335,7 +335,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BE838C552D5C93B30041B639 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */ = {
+		AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/alessiorubicini/SFSymbolsPicker";
 			requirement = {
@@ -346,9 +346,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BE838C562D5C93B30041B639 /* SFSymbolsPicker */ = {
+		AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BE838C552D5C93B30041B639 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */;
+			package = AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */;
 			productName = SFSymbolsPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
