@@ -38,7 +38,7 @@ struct PizzaMoneyApp: App {
     @StateObject var appSharedState : AppSharedState = AppSharedState()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EditCategoriesView()
                 .applyTheme(theme)
 
         }
