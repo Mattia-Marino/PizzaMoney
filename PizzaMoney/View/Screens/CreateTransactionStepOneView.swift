@@ -18,6 +18,8 @@ struct CreateTransactionStepOneView: View {
     @State private var searchText: String = ""
     
     @Query private var categories: [Category]
+    @Binding var isSheetPresented: Bool
+    @State private var isPagina2Presented = false
     
     var body: some View {
         NavigationStack{
@@ -65,17 +67,28 @@ struct CreateTransactionStepOneView: View {
                         }
                     }
                 }.padding([.horizontal],20)
-            }.padding([.top],20).toolbar {
-                
+            }.padding([.top],20)
+                .toolbar {
+           
                 ToolbarItem(placement: .navigationBarTrailing){
-                    NavigationLink(destination:CreateTransactionStepTwoView()){
+                    NavigationLink(destination:CreateTransactionStepTwoView(isSheetPresented: $isSheetPresented)){
                         Text("Amount")
                         Image(systemName: "chevron.right")
                     }.disabled(appSharedState.title == "")
                 }
-                
-            }.navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
-        }.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
+           
+            }
+            .navigationTitle("Add transaction").navigationBarTitleDisplayMode(.inline)
+           // .navigationBarItems(trailing: Button(action: {
+           //     self.isPagina2Presented = true
+           // }) {
+           //     Text("Amount")
+           //                  Image(systemName: "chevron.right")
+           // }.disabled(appSharedState.title == ""))
+           // .sheet(isPresented: self.$isPagina2Presented, content: { //CreateTransactionStepTwoView(isSheetPresented: $isSheetPresented)})
+            
+            
+        }//.searchable(text: $searchText).frame(maxHeight: .infinity, alignment:.leading)
         
     }
     
@@ -144,5 +157,5 @@ struct SubCategoryRow:View{
 }
 
 #Preview {
-    CreateTransactionStepOneView().environmentObject(AppSharedState())
+    CreateTransactionStepOneView(isSheetPresented: .constant(true)).environmentObject(AppSharedState())
 }

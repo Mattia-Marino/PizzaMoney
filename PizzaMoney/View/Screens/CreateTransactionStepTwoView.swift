@@ -17,6 +17,7 @@ struct CreateTransactionStepTwoView: View {
     @EnvironmentObject var appSharedState : AppSharedState
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Binding var isSheetPresented: Bool
     
     @State private var date = Date()
     let dateRange: ClosedRange<Date> = {
@@ -90,12 +91,15 @@ struct CreateTransactionStepTwoView: View {
                             
                             modelContext.insert(appSharedState.selectedWallet!)
                             
+                            isSheetPresented = false
+                            
                             //reset appSharedState after insert
                             appSharedState.title = ""
                             appSharedState.data = Date.now
                             appSharedState.amount = 0.0
                             appSharedState.selectedSubCategory = nil
                             appSharedState.type = TransactionType.expense
+                            
                             
                             
                         }){
@@ -109,5 +113,5 @@ struct CreateTransactionStepTwoView: View {
 }
 
 #Preview {
-    CreateTransactionStepTwoView().environmentObject(AppSharedState())
+    CreateTransactionStepTwoView(isSheetPresented: .constant(true)).environmentObject(AppSharedState())
 }

@@ -89,7 +89,7 @@ struct AccountsWalletView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.shouldPresentAddWalletView = true
             }) {
-                Image(systemName: "plus.circle.fill")
+                Image(systemName: "plus")
                     .foregroundColor(.blue)
             })
             .sheet(isPresented: self.$shouldPresentAddWalletView, content: { AddWalletView()})

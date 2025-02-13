@@ -12,6 +12,7 @@ struct TransactionsListView: View {
     @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
     
     @State var currentWallet: Wallet?
+    @State private var isSheetPresented = false
     
     var filteredTransactions: [Transaction] {
         guard let currentWallet = currentWallet else { return [] }
@@ -112,26 +113,25 @@ struct TransactionsListView: View {
             
             .navigationTitle("Transactions")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button(action: {
+                self.isSheetPresented = true
+            }) {
+                Image(systemName: "plus")
+                    .foregroundColor(.blue)
+            })
+            .sheet(isPresented: self.$isSheetPresented, content: { CreateTransactionStepOneView(isSheetPresented: $isSheetPresented)})
             
-            .toolbar {
-                
-                ToolbarItem(placement: .topBarTrailing) {
-
-                    
-                    Button(action: {
-                        // Action for editing categories
-                    }) {
-                        NavigationLink(destination: CreateTransactionStepOneView()){
-                            Image(systemName: "plus")
-                        }
-                        
-                    }
-                    
-                    
-                    
-                }
-                
-            }
+           // .toolbar {
+           //     ToolbarItem(placement: .topBarTrailing) {
+           //         Button(action: {
+           //             // Action for editing categories
+           //         }) {
+           //             NavigationLink(destination: CreateTransactionStepOneView()){
+           //                 Image(systemName: "plus")
+           //             }
+           //         }
+           //     }
+           // }
             
         }
         
