@@ -134,8 +134,8 @@ private struct RowView: View {
             Text(category.title)
                 .foregroundStyle(Color(hex: category.color))
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.secondary)
+            NavigationLink(destination: TransactionsListContent(categoryFilter: category)) {}
+            
         }
     }
 
