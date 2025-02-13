@@ -25,7 +25,7 @@ struct TransactionsListContent: View {
         guard let currentWallet = currentWallet else { return [] }
         return currentWallet.transactions
             .filter { $0.date >= startDate && $0.date <= endDate }
-            .filter { categoryFilter == nil || $0.category?.id == categoryFilter?.id }
+            .filter { categoryFilter == nil || $0.subCategory?.category?.id == categoryFilter?.id }
             .sorted(by: { $0.date > $1.date })
     }
     
