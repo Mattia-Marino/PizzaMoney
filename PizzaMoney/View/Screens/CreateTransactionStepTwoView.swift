@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import _SwiftData_SwiftUI
 
 
 struct CreateTransactionStepTwoView: View {
-    
-    var banks = ["Contesa San Paolo", "Banca Inulia", "BananaRepublic"]
+    @Query(sort: [SortDescriptor(\Wallet.name)]) var banks: [Wallet]
+
+    //var banks = ["Contesa San Paolo", "Banca Inulia", "BananaRepublic"]
     
     @EnvironmentObject var appSharedState : AppSharedState
     @Environment(\.dismiss) private var dismiss
@@ -43,7 +45,8 @@ struct CreateTransactionStepTwoView: View {
         NavigationStack{
             VStack{
                 
-                CarouselView(wallets: appSharedState.wallets, selected: $appSharedState.selectedWallet)
+               // CarouselView(wallets: appSharedState.wallets, selected: $appSharedState.selectedWallet)
+                CarouselView(wallets: banks, selected: $appSharedState.selectedWallet)
                 
                 HStack{
                     
