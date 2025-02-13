@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AE7C481F2D5DE4B500A7675C /* SFSymbolsPicker in Frameworks */ = {isa = PBXBuildFile; productRef = AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BEEEFC532D50E42800FF1E11 /* PizzaMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PizzaMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7C481F2D5DE4B500A7675C /* SFSymbolsPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = PizzaMoney;
 			packageProductDependencies = (
+				AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */,
 			);
 			productName = PizzaMoney;
 			productReference = BEEEFC532D50E42800FF1E11 /* PizzaMoney.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = BEEEFC4A2D50E42800FF1E11;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BEEEFC542D50E42800FF1E11 /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alessiorubicini/SFSymbolsPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AE7C481E2D5DE4B500A7675C /* SFSymbolsPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE7C481D2D5DE4B500A7675C /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */;
+			productName = SFSymbolsPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BEEEFC4B2D50E42800FF1E11 /* Project object */;
 }

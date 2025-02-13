@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 import Charts
 import _SwiftData_SwiftUI
 
@@ -13,12 +14,12 @@ import _SwiftData_SwiftUI
 struct TotalsView: View {
     
     @AppStorage("filter_startDate") var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
-    
     @AppStorage("filter_endDate") var endDate: Date = Date()
     
     @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
-    
+    @Environment(\.modelContext) var modelContext
     @State var currentWallet: Wallet?
+    
     
     var body: some View {
         
@@ -29,11 +30,14 @@ struct TotalsView: View {
             to: endDate
         ) ?? 0
         
-        var transactionsSign = totalTransactions < 0 ? "-" : "+"
+        /* Se l'ammontare è negativo il segno meno viene messo
+         * inj automatico*/
+        var transactionsSign = totalTransactions < 0 ? "" : "+"
         
         var transactionsColor = totalTransactions < 0 ? Color.red : Color.green
         
         NavigationStack{
+            
             
             VStack{
                 
@@ -52,6 +56,7 @@ struct TotalsView: View {
                     .labelsHidden()
                     
                 }
+                
                 
                 Chart(categoriesInWallet ?? [], id: \.0.id) { (category, total) in
                     SectorMark(
@@ -115,11 +120,8 @@ struct TotalsView: View {
             
             .navigationTitle("Totals")
             .navigationBarTitleDisplayMode(.inline)
-            
         }
-        
     }
-    
 }
 
 private struct RowView: View {
@@ -136,6 +138,7 @@ private struct RowView: View {
             
         }
     }
+
 }
 
 #Preview {
