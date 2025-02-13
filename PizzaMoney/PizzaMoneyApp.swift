@@ -32,18 +32,15 @@ struct PizzaMoneyApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-        
-
     
-    @StateObject var appSharedState : AppSharedState = AppSharedState()
+    @StateObject var appSharedState: AppSharedState = AppSharedState()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView() // Start with splash screen
                 .applyTheme(theme)
-
+                .modelContainer(sharedModelContainer)
+                .environmentObject(appSharedState)
         }
-        .modelContainer(sharedModelContainer)
-        .environmentObject(appSharedState)
     }
 }
-
