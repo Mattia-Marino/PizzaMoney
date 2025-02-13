@@ -126,6 +126,7 @@ struct EditCategory_Item: View {
                                     
                                 }) {
                                     Label("", systemImage: "trash" )
+                                        
                                 
                                 }
                             }
@@ -138,6 +139,7 @@ struct EditCategory_Item: View {
             }.toolbar{
                 Button("Save"){
                     let newCategoria = Category(title: categoryName , color: "", subCategories: [])
+                    newCategoria.icon = selectedIcon
                     for item in items{
                         newCategoria.subCategories?.append(Category(title: item, color: ""))
                     }
@@ -147,6 +149,7 @@ struct EditCategory_Item: View {
                     } catch {
                         print("Errore in salva")
                     }
+                    
                 }
             }.navigationTitle("Edit Category").navigationBarTitleDisplayMode(.inline)
         }
