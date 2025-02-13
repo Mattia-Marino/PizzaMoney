@@ -4,14 +4,10 @@
 //
 //  Created by san017 on 09/02/25.
 //
-
-
-
 import SwiftUI
 import SwiftData
 struct CreateTransactionStepOneView: View {
     @EnvironmentObject var appSharedState : AppSharedState
-    @Environment(\.modelContext) private var modelContext
     
     
     @State private var selectedCategory: String = "Subscription"
@@ -27,15 +23,15 @@ struct CreateTransactionStepOneView: View {
                 VStack{
                     HStack(spacing: 50){
                         Label("Title", systemImage: "")
-                        TextField("Netplis", text: $appSharedState.title)
+                        TextField("e.g. electricity bill", text: $appSharedState.title)
                     }
                     Divider()
                     HStack(spacing: 50){
                         Label("Type", systemImage: "")
                         Spacer()
                         Picker(selection: $appSharedState.type, label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
-                            Text("Expanse").tag(TransactionType.expense)
-                            Text("Incoming").tag(TransactionType.income)
+                            Text("Expense").tag(TransactionType.expense)
+                            Text("Income").tag(TransactionType.income)
                         }
                     }
                     

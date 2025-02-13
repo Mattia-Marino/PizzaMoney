@@ -17,7 +17,7 @@ struct TransactionsListContent: View {
     
     @AppStorage("filter_endDate") var endDate: Date = Date()
     
-    @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
+    @Query(sort: [SortDescriptor(\Wallet.name)]) var wallets: [Wallet]
     
     @State var currentWallet: Wallet?
     

@@ -82,7 +82,7 @@ struct EditCategoriesView: View {
                 }
             }
         }
-        .navigationTitle("Edit transaction")
+        .navigationTitle("Edit categories")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: searchText) { _ in
             updateFilteredResults()
