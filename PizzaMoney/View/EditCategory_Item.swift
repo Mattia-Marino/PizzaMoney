@@ -137,16 +137,7 @@ struct EditCategory_Item: View {
                 
             }.toolbar{
                 Button("Save"){
-                    let newCategoria = Category(title: categoryName , color: "", subCategories: [])
-                    for item in items{
-                        newCategoria.subCategories.append(SubCategory(title: item, category: newCategoria))
-                    }
-                    modelContext.insert(newCategoria)
-                    do {
-                        try modelContext.save()
-                    } catch {
-                        print("Errore in salva")
-                    }
+                   
                 }
             }.navigationTitle("Edit Category").navigationBarTitleDisplayMode(.inline)
         }

@@ -52,6 +52,8 @@ struct mockDataCreate {
 }
 
 
+
+
 func createMock() -> mockDataCreate {
     let healthCategory = Category(title: "Health", icon: "heart.fill", color: "#E74C3C", subCategories:[])
     let shoppingCategory = Category(title: "Shopping", icon: "bag.fill", color: "#F39C12", subCategories:[])

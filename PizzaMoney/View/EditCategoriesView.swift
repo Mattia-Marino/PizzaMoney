@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import _SwiftData_SwiftUI
+//import _SwiftData_SwiftUI
 
 struct CategoryStruct: Identifiable {
     var id = UUID()
@@ -16,93 +16,97 @@ struct CategoryStruct: Identifiable {
 }
 
 struct EditCategoriesView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var categoriesQuery: [Category]
-
-    @State private var searchText: String = ""
-    @State private var filteredCategories: [Category] = []
-
+    
+    @State var catWithSub: Array<Category> = []
+    @State var categories: Array<Category> = createMock().categories
+    @State var searchText: String = ""
+    
     var body: some View {
-        ScrollView {
-            ForEach(filteredCategories) { category in
-                VStack {
-                    HStack {
-                        Image(systemName: category.icon ?? "")
-                            .foregroundStyle(Color(hex: category.color))
-                        Text(category.title)
-                            .foregroundStyle(Color(hex: category.color))
-
-                        Spacer()
-                        Button("Edit") {
-                            // Edit action here
+        NavigationStack {
+            ScrollView{
+                ForEach(catWithSub) { category in
+                    VStack {
+                        HStack {
+                            
+                            Image(systemName: category.icon ?? "")
+                                .foregroundStyle(Color(hex: category.color))
+                            Text(category.title)                            .foregroundStyle(Color(hex: category.color))
+                            
+                            Spacer()
+                            NavigationLink(destination: EditButtonView()){
+                                Text("Edit")
+                                    .foregroundColor(.gray)
+                            }
+                            
                         }
-                        .foregroundStyle(.gray)
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
-                    }
-                    Divider()
-
-                    VStack(alignment: .leading) {
-                        ForEach(searchSubCat(subcategories: category.subCategories ?? []), id: \.self) { subcategory in
-                            Text(subcategory.title)
-                            Divider()
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .padding(.horizontal, 20)
-                }
-                .padding()
-            }
-        }
-        .searchable(text: $searchText)
-        .toolbar {
-            ToolbarItem {
-                NavigationLink(destination: EditCategory_Item()) {
-                    Image(systemName: "plus.circle.fill")
+                        
+                        Divider()
+                        VStack {
+                            VStack(alignment: .leading){
+                                ForEach(category.subCategories ?? [], id:\.self) { subcategory in
+                                    
+                                    Text(subcategory.title)
+                                    Divider()
+                                    
+                                    
+                                }
+                                
+                            }
+                        }.frame(maxWidth: .infinity, alignment: .leading).padding().padding([.horizontal],20)
+                    }.padding()
+                    
                 }
             }
-        }
-        .navigationTitle("Edit transaction")
-        .navigationBarTitleDisplayMode(.inline)
-        .onChange(of: searchText) { _ in
-            updateFilteredResults()
-        }
-        .onAppear {
-            DispatchQueue.main.async {
-                updateFilteredResults()
-            }
+            .toolbar {
+                ToolbarItem() {
+                    NavigationLink(destination: EditCategory_Item()) {
+                        Image(systemName: "plus.circle.fill")
+                    }
+                }
+                
+            }.navigationTitle("Edit transaction").navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText)
         }
     }
-
-    func updateFilteredResults() {
-        if searchText.isEmpty {
-            filteredCategories = categoriesQuery
+    
+    var searchResults: [Category]{
+        if searchText.isEmpty{
+            return categories
         } else {
-            filteredCategories = categoriesQuery.filter { category in
-                filtSubCat(subcategories: category.subCategories)
+            //return categories
+            return categories.filter {
+                filtSubCat(cats: $0.subCategories ?? [])
             }
         }
     }
-
-    func filtSubCat(subcategories: [SubCategory]) -> Bool {
+    
+    func filtSubCat(cats: Array<Category>) -> Bool {
         if searchText.isEmpty {
             return true
         }
-        return subcategories.contains { subCat in
-            subCat.title.localizedCaseInsensitiveContains(searchText)
-        }
+        return cats.filter { $0.title.lowercased().contains(searchText.lowercased())
+        }.count > 0
     }
-
-    func searchSubCat(subcategories: [SubCategory]) -> [SubCategory] {
+    
+    func searchSubCat(categories: Array<Category>) -> Array<Category> {
         if searchText.isEmpty {
-            return subcategories
+            self.catWithSub = categories
+            return categories
         }
-        return subcategories.filter { subCat in
-            subCat.title.localizedCaseInsensitiveContains(searchText)
+        let subCats = categories.filter {
+            $0.title.lowercased().contains(searchText.lowercased())
         }
+        if subCats.count > 0 {
+            let catFound = categories.filter { $0.title.lowercased()
+                == searchText.lowercased()
+            }
+            //self.catWithSub.append(contentsOf: catFound)
+        }
+        return subCats
     }
+    
 }
+
 
 #Preview {
     EditCategoriesView()
