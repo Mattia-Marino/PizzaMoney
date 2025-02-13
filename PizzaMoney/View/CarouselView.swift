@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import _SwiftData_SwiftUI
 
 struct CarouselView: View {
     
+    
+
     var wallets : [Wallet]
     @Binding var selected : Wallet?
     
