@@ -8,19 +8,16 @@
 import SwiftUI
 import _SwiftData_SwiftUI
 
-struct CategoryStruct: Identifiable {
-    var id = UUID()
-    var nome: String
-    var img: String
-    var color: Color
-}
-
 struct EditCategoriesView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var categoriesQuery: [Category]
 
     @State private var searchText: String = ""
     @State private var filteredCategories: [Category] = []
+    
+    // State variable for delete confirmation
+    @State private var categoryToDelete: Category?
+    @State private var isShowingDeleteAlert = false
 
     var body: some View {
         ScrollView {
@@ -33,12 +30,34 @@ struct EditCategoriesView: View {
                             .foregroundStyle(Color(hex: category.color))
 
                         Spacer()
-                        Button("Edit") {
-                            // Edit action here
+                        
+                        // Delete button
+                        Button(action: {
+                            categoryToDelete = category
+                            isShowingDeleteAlert = true
+                        }) {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
+                        .alert("Delete Category?", isPresented: $isShowingDeleteAlert, presenting: categoryToDelete) { category in
+                            Button("Cancel", role: .cancel) { }
+                            Button("Delete", role: .destructive) {
+                                deleteCategory(category)
+                            }
+                        } message: { _ in
+                            Text("This will delete the category and all its subcategories.")
+                        }
+                        
+
+                        // Edit button
+                        NavigationLink(destination: EditCategory_Item(existingCategory: category)) {
+                            Text("Edit")
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
                         }
                         .foregroundStyle(.gray)
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
+                        .padding(.leading, 20)
+                        
                     }
                     Divider()
 
@@ -100,6 +119,16 @@ struct EditCategoriesView: View {
         }
         return subcategories.filter { subCat in
             subCat.title.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+
+    func deleteCategory(_ category: Category) {
+        modelContext.delete(category)  // Remove category from SwiftData
+        do {
+            try modelContext.save()
+            updateFilteredResults()  // Refresh the list
+        } catch {
+            print("Error deleting category: \(error)")
         }
     }
 }
