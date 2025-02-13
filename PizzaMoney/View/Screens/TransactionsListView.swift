@@ -6,7 +6,8 @@ struct TransactionsListView: View {
     
     @AppStorage("filter_startDate") var startDate: Date = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
     
-    @AppStorage("filter_endDate") var endDate: Date = Date()
+    //@AppStorage("filter_endDate") var endDate: Date = Date()
+    @AppStorage("filter_endDate") var endDate: Date = Calendar.current.date(byAdding: .day, value: +1, to: Date())!
     
     @Query(sort: [SortDescriptor(\Wallet.timestamp)]) var wallets: [Wallet]
     
