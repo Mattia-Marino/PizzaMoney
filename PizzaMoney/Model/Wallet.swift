@@ -58,7 +58,7 @@ class Wallet : Identifiable {
         
         for transaction in transactions {
             // Check if transaction falls within the date range
-            if transaction.date >= startDate && transaction.date <= endDate {
+            if transaction.date >= startDate && transaction.date <= endDate && transaction.transactionType != .income {
 
                 guard let category = transaction.subCategory?.category else { continue }
 
