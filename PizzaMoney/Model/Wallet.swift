@@ -74,7 +74,7 @@ class Wallet : Identifiable {
     
     func transactionsForCategory(_ categoryTitle: String, from startDate: Date, to endDate: Date) -> [Transaction] {
         return transactions.filter {
-            $0.subCategory?.category.title == categoryTitle &&
+            $0.subCategory?.category?.title == categoryTitle &&
             $0.date >= startDate &&
             $0.date <= endDate
         }
